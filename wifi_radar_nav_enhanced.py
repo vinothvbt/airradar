@@ -43,7 +43,7 @@ DB_FILE = 'wifi_nav_enhanced.db'
 RADAR_SIZE = 450
 MAX_RADIUS = 180
 RING_SPACING = 30
-DOT_SIZE =10
+DOT_SIZE = 10
 FONT_SIZE = 11  # Increased from 9
 VERSION = "4.0.0"
 
@@ -53,7 +53,7 @@ NAV_BAR_HEIGHT = 30
 # Penetration Testing Constants
 SIGNAL_THRESHOLDS = {
     'EXCELLENT': -30,
-    'GOOD': -50, 
+    'GOOD': -50,
     'FAIR': -70,
     'POOR': -85,
     'VERY_POOR': -100
@@ -76,6 +76,7 @@ SIGNAL_PATTERN = re.compile(r'signal:\s*(-?\d+(?:\.\d+)?)\s*dBm', re.IGNORECASE)
 FREQ_PATTERN = re.compile(r'freq:\s*(\d+)', re.IGNORECASE)
 SSID_PATTERN = re.compile(r'SSID:\s*(.+?)(?:\n|$)')
 
+
 @dataclass
 class AccessPoint:
     """Enhanced AP class with comprehensive penetration testing capabilities"""
@@ -86,32 +87,32 @@ class AccessPoint:
     channel: int = 0
     security: str = "Unknown"
     last_seen: datetime = field(default_factory=datetime.now)
-    
+
     # Enhanced positioning and analysis
     distance: float = 0.0
     angle: float = 0.0
     vendor: str = "Unknown"
     confidence: float = 0.0
-    
+
     # Penetration testing features
     vulnerability_score: int = 0
     attack_vectors: List[str] = field(default_factory=list)
     threat_level: str = "LOW"
     is_vulnerable: bool = False
-    
+
     # Advanced security analysis
     encryption_details: str = ""
     wps_enabled: bool = False
     client_count: int = 0
     uptime_estimate: int = 0
-    
+
     def __post_init__(self):
         """Initialize calculated fields"""
         self._calculate_distance()
         self._calculate_angle()
         self._analyze_vendor()
         self._analyze_security()
-    
+
     def _calculate_distance(self):
         """Calculate distance using Free Space Path Loss (FSPL) formula"""
         if self.signal_dbm >= -30:
@@ -124,73 +125,73 @@ class AccessPoint:
             self.distance = 35.0 + ((-70 - self.signal_dbm) * 2.0)
         else:
             self.distance = 65.0 + ((-85 - self.signal_dbm) * 3.0)
-        
+
         # Add some randomization for more realistic positioning
         import random
         self.distance *= random.uniform(0.8, 1.2)
         self.distance = max(1.0, min(150.0, self.distance))
-    
+
     def _calculate_angle(self):
         """Calculate angle based on BSSID for consistent positioning"""
         # Use BSSID hash for consistent angle calculation
         hash_val = hash(self.bssid.replace(':', ''))
         # Distribute angles more evenly to prevent clustering
         base_angle = (hash_val % 360) * math.pi / 180
-        
+
         # Add channel-based offset for better distribution
         channel_offset = (self.channel * 13.7) * math.pi / 180
-        
+
         self.angle = (base_angle + channel_offset) % (2 * math.pi)
-    
+
     def _analyze_vendor(self):
         """Analyze vendor from MAC address OUI"""
         oui = self.bssid.replace(':', '').upper()
-        
+
         vendors = {
             # Major router manufacturers
             "D4CA6D": "ASUS", "704D7B": "ASUS", "1CB72C": "ASUS", "2C56DC": "ASUS",
             "90F652": "ASUS", "AC220B": "ASUS", "0C9D92": "ASUS", "50465D": "ASUS",
-            
+
             # Cisco/Linksys
             "0013C4": "Cisco", "001DE5": "Cisco", "00264A": "Cisco", "68BD15": "Cisco",
             "68EF43": "Linksys", "F0B4D2": "Linksys", "24A43C": "Linksys", "20AA4B": "Linksys",
-            
+
             # TP-Link
             "ECF4BB": "TP-Link", "9C53CD": "TP-Link", "E8DE27": "TP-Link", "C05326": "TP-Link",
             "14CC20": "TP-Link", "0C8066": "TP-Link", "843497": "TP-Link", "748EE8": "TP-Link",
-            
+
             # Netgear
             "9CB70D": "Netgear", "A021B7": "Netgear", "0846A0": "Netgear", "2C3033": "Netgear",
             "CC40D0": "Netgear", "84D6D0": "Netgear", "4CF952": "Netgear", "04BF6D": "Netgear",
-            
+
             # D-Link
             "B0487A": "D-Link", "CCDC02": "D-Link", "142D27": "D-Link", "E46F13": "D-Link",
             "5CD998": "D-Link", "E0051E": "D-Link", "C8BE19": "D-Link", "BC5FF4": "D-Link",
-            
+
             # Apple
             "8863DF": "Apple", "041E64": "Apple", "04E536": "Apple", "68AB1E": "Apple",
             "D89695": "Apple", "A85C2C": "Apple", "7C6D62": "Apple", "0056CD": "Apple",
-            
+
             # Intel
             "00A0C9": "Intel", "001F3F": "Intel", "0024D7": "Intel", "8C705A": "Intel",
-            
+
             # Samsung
             "002454": "Samsung", "001485": "Samsung", "1C232C": "Samsung", "C8F733": "Samsung",
-            
+
             # VMware/Virtualization
             "005056": "VMware", "080027": "Oracle", "00155D": "Microsoft", "001C42": "Parallels"
         }
-        
+
         self.vendor = vendors.get(oui[:6], "Unknown")
-    
+
     def _analyze_security(self):
         """Comprehensive security analysis with vulnerability assessment"""
         self.attack_vectors = []
         base_score = 0
-        
+
         # Security protocol analysis
         security_lower = self.security.lower()
-        
+
         if 'open' in security_lower or not self.security or self.security == "":
             base_score = 95
             self.threat_level = "CRITICAL"
@@ -198,7 +199,7 @@ class AccessPoint:
             self.encryption_details = "No encryption"
             self.attack_vectors = [
                 "Direct network access",
-                "Traffic interception and analysis", 
+                "Traffic interception and analysis",
                 "Man-in-the-middle attacks",
                 "Packet injection and manipulation",
                 "DNS spoofing and redirection",
@@ -206,7 +207,7 @@ class AccessPoint:
                 "Session hijacking",
                 "Credential harvesting"
             ]
-            
+
         elif 'wep' in security_lower:
             base_score = 88
             self.threat_level = "CRITICAL"
@@ -222,7 +223,7 @@ class AccessPoint:
                 "Korek attacks",
                 "PTW attack method"
             ]
-            
+
         elif 'wpa3' in security_lower:
             base_score = 15
             self.threat_level = "LOW"
@@ -233,7 +234,7 @@ class AccessPoint:
                 "Side-channel timing attacks",
                 "Dragonfly handshake analysis"
             ]
-            
+
         elif 'wpa2' in security_lower:
             base_score = 35
             self.threat_level = "MEDIUM"
@@ -247,7 +248,7 @@ class AccessPoint:
                 "WPS PIN cracking (if enabled)",
                 "KRACK vulnerability exploitation"
             ]
-            
+
         elif 'wpa' in security_lower:
             base_score = 45
             self.threat_level = "MEDIUM"
@@ -260,7 +261,7 @@ class AccessPoint:
                 "Beck-Tews attack",
                 "Chopchop variations"
             ]
-        
+
         # Signal strength impact
         if self.signal_dbm > -30:
             base_score += 25
@@ -271,7 +272,7 @@ class AccessPoint:
         elif self.signal_dbm > -70:
             base_score += 10
             self.attack_vectors.append("Moderate signal strength")
-        
+
         # SSID-based vulnerability indicators
         ssid_lower = self.ssid.lower()
         weak_indicators = [
@@ -286,17 +287,17 @@ class AccessPoint:
             ('dlink', 12, "Default D-Link SSID"),
             ('router', 8, "Generic router name")
         ]
-        
+
         for indicator, score_bonus, description in weak_indicators:
             if indicator in ssid_lower:
                 base_score += score_bonus
                 self.attack_vectors.append(description)
-        
+
         # Hidden SSID check
         if not self.ssid or self.ssid.strip() == "" or "\\x00" in self.ssid:
             base_score += 5
             self.attack_vectors.append("Hidden SSID - probe request attacks")
-        
+
         # Frequency-based analysis
         if self.frequency < 2500:  # 2.4GHz
             base_score += 5
@@ -304,10 +305,10 @@ class AccessPoint:
         elif self.frequency > 5000:  # 5GHz
             base_score += 2
             self.attack_vectors.append("5GHz band - shorter range but less monitored")
-        
+
         # Finalize vulnerability score and threat level
         self.vulnerability_score = min(100, base_score)
-        
+
         if self.vulnerability_score >= 80:
             self.threat_level = "CRITICAL"
             self.is_vulnerable = True
@@ -322,13 +323,14 @@ class AccessPoint:
         else:
             self.threat_level = "MINIMAL"
 
+
 def scan_wifi(interface: str = 'wlan0') -> List[Dict]:
     """Enhanced WiFi scanning with comprehensive parsing"""
     cmd = f"sudo iw dev {interface} scan"
     try:
         output = subprocess.check_output(
-            cmd.split(), 
-            stderr=subprocess.DEVNULL, 
+            cmd.split(),
+            stderr=subprocess.DEVNULL,
             timeout=30
         ).decode()
         return parse_iw_output(output)
@@ -336,44 +338,45 @@ def scan_wifi(interface: str = 'wlan0') -> List[Dict]:
         try:
             cmd = f"sudo iwlist {interface} scan"
             output = subprocess.check_output(
-                cmd.split(), 
-                stderr=subprocess.DEVNULL, 
+                cmd.split(),
+                stderr=subprocess.DEVNULL,
                 timeout=30
             ).decode()
             return parse_iwlist_output(output)
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
             return []
 
+
 def parse_iw_output(output: str) -> List[Dict]:
     """Parse iw scan output with enhanced extraction"""
     networks = []
     blocks = output.split('BSS ')[1:]
-    
+
     for block in blocks:
         try:
             lines = block.split('\n')
             bssid = lines[0].split('(')[0].strip()
-            
+
             ssid_match = SSID_PATTERN.search(block)
             ssid = ssid_match.group(1).strip() if ssid_match else ""
-            
+
             signal_match = SIGNAL_PATTERN.search(block)
             if not signal_match:
                 continue
             signal = float(signal_match.group(1))
-            
+
             freq_match = FREQ_PATTERN.search(block)
             if not freq_match:
                 continue
             frequency = int(freq_match.group(1))
-            
+
             if 2412 <= frequency <= 2484:
                 channel = (frequency - 2412) // 5 + 1
             elif 5170 <= frequency <= 5825:
                 channel = (frequency - 5000) // 5
             else:
                 channel = 0
-            
+
             security = "Open"
             if 'Privacy' in block or 'Capability' in block:
                 if 'RSN' in block:
@@ -385,9 +388,9 @@ def parse_iw_output(output: str) -> List[Dict]:
                     security = "WPA"
                 elif 'Privacy' in block:
                     security = "WEP"
-            
+
             wps_enabled = 'WPS' in block or 'Wi-Fi Protected Setup' in block
-            
+
             networks.append({
                 'bssid': bssid,
                 'ssid': ssid,
@@ -397,43 +400,44 @@ def parse_iw_output(output: str) -> List[Dict]:
                 'security': security,
                 'wps_enabled': wps_enabled
             })
-            
+
         except (ValueError, IndexError):
             continue
-    
+
     return networks
+
 
 def parse_iwlist_output(output: str) -> List[Dict]:
     """Parse iwlist scan output"""
     networks = []
     cells = output.split('Cell ')[1:]
-    
+
     for cell in cells:
         try:
             bssid_match = re.search(r'Address: ([0-9A-F:]{17})', cell, re.IGNORECASE)
             if not bssid_match:
                 continue
             bssid = bssid_match.group(1)
-            
+
             ssid_match = re.search(r'ESSID:"(.+?)"', cell)
             ssid = ssid_match.group(1) if ssid_match else ""
-            
+
             signal_match = re.search(r'Signal level=([-\d]+) dBm', cell)
             if not signal_match:
                 continue
             signal = float(signal_match.group(1))
-            
+
             freq_match = re.search(r'Frequency:([\d.]+) GHz', cell)
             if freq_match:
                 frequency = int(float(freq_match.group(1)) * 1000)
             else:
                 frequency = 2437
-                
+
             if 2412 <= frequency <= 2484:
                 channel = (frequency - 2412) // 5 + 1
             else:
                 channel = 0
-            
+
             security = "Open"
             if "Encryption key:on" in cell:
                 if "WPA3" in cell:
@@ -444,7 +448,7 @@ def parse_iwlist_output(output: str) -> List[Dict]:
                     security = "WPA"
                 else:
                     security = "WEP"
-            
+
             networks.append({
                 'bssid': bssid,
                 'ssid': ssid,
@@ -454,48 +458,49 @@ def parse_iwlist_output(output: str) -> List[Dict]:
                 'security': security,
                 'wps_enabled': False
             })
-            
+
         except (ValueError, IndexError):
             continue
-    
+
     return networks
+
 
 class WiFiScanner(QThread):
     """Enhanced background WiFi scanning"""
     access_points_found = pyqtSignal(list)
     scan_error = pyqtSignal(str)
     scan_progress = pyqtSignal(int)
-    
+
     def __init__(self):
         super().__init__()
         self._mutex = QMutex()
         self._running = False
         self._interface = 'wlan0'
         self._scan_interval = 5
-        
+
     def set_interface(self, interface: str):
         self._mutex.lock()
         self._interface = interface
         self._mutex.unlock()
-    
+
     def set_scan_interval(self, interval: int):
         self._mutex.lock()
         self._scan_interval = interval
         self._mutex.unlock()
-    
+
     def start_scanning(self):
         self._mutex.lock()
         self._running = True
         self._mutex.unlock()
         self.start()
-    
+
     def stop_scanning(self):
         self._mutex.lock()
         self._running = False
         self._mutex.unlock()
         self.quit()
         self.wait(2000)
-    
+
     def run(self):
         while True:
             self._mutex.lock()
@@ -503,15 +508,15 @@ class WiFiScanner(QThread):
             interface = self._interface
             interval = self._scan_interval
             self._mutex.unlock()
-            
+
             if not should_continue:
                 break
-            
+
             try:
                 self.scan_progress.emit(25)
                 networks = scan_wifi(interface)
                 self.scan_progress.emit(75)
-                
+
                 access_points = []
                 for net in networks:
                     ap = AccessPoint(
@@ -523,34 +528,35 @@ class WiFiScanner(QThread):
                         security=net['security']
                     )
                     access_points.append(ap)
-                
+
                 self.scan_progress.emit(100)
                 self.access_points_found.emit(access_points)
-                
+
             except Exception as e:
                 self.scan_error.emit(str(e))
-            
+
             time.sleep(interval)
+
 
 class RadarCanvas(QWidget):
     """Enhanced radar canvas with modern visualization"""
     ap_selected = pyqtSignal(object)
-    
+
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
         self.dot_positions = []
         self._selected_index = -1
         self.access_points = []
-        
+
         # UI settings
         self.show_vulnerable_only = False
         self.show_threat_colors = True
-        
+
         self.setFixedSize(RADAR_SIZE, RADAR_SIZE)
         self._center_x = RADAR_SIZE // 2
         self._center_y = RADAR_SIZE // 2
-        
+
         self._setup_graphics()
         self._apply_theme()
 
@@ -562,7 +568,7 @@ class RadarCanvas(QWidget):
         self._white_pen = QPen(Qt.white, 1)
         self._red_pen = QPen(Qt.red, 2)
         self._yellow_pen = QPen(Qt.yellow, 2)
-        
+
         self.threat_colors = {
             'CRITICAL': QColor(255, 0, 0),
             'HIGH': QColor(255, 165, 0),
@@ -570,7 +576,7 @@ class RadarCanvas(QWidget):
             'LOW': QColor(0, 255, 255),
             'MINIMAL': QColor(0, 255, 0)
         }
-        
+
         self._small_font = QFont("JetBrains Mono", 10)  # Increased from 8
         self._normal_font = QFont("JetBrains Mono", 11)  # Increased from 9
 
@@ -584,7 +590,7 @@ class RadarCanvas(QWidget):
     def set_show_vulnerable_only(self, enabled: bool):
         self.show_vulnerable_only = enabled
         self.update()
-        
+
     def set_show_threat_colors(self, enabled: bool):
         self.show_threat_colors = enabled
         self.update()
@@ -593,20 +599,20 @@ class RadarCanvas(QWidget):
         """Update access points with anti-clustering"""
         self.access_points = aps
         self.dot_positions.clear()
-        
+
         display_aps = aps
         if self.show_vulnerable_only:
             display_aps = [ap for ap in aps if ap.is_vulnerable]
-        
+
         used_positions = []
         min_distance_between_aps = 30
-        
+
         for i, ap in enumerate(display_aps):
             radius = min(ap.distance * MAX_RADIUS / self.parent.max_distance, MAX_RADIUS - 10)
-            
+
             x = int(self._center_x + radius * math.cos(ap.angle))
             y = int(self._center_y + radius * math.sin(ap.angle))
-            
+
             attempts = 0
             while attempts < 25:
                 too_close = False
@@ -615,16 +621,16 @@ class RadarCanvas(QWidget):
                     if distance < min_distance_between_aps:
                         too_close = True
                         break
-                
+
                 if not too_close:
                     break
-                
+
                 angle_adjustment = (attempts * 12) * math.pi / 180
                 new_angle = ap.angle + angle_adjustment
                 x = int(self._center_x + radius * math.cos(new_angle))
                 y = int(self._center_y + radius * math.sin(new_angle))
                 attempts += 1
-            
+
             used_positions.append((x, y))
             self.dot_positions.append({
                 'x': x,
@@ -632,7 +638,7 @@ class RadarCanvas(QWidget):
                 'ap': ap,
                 'index': i
             })
-        
+
         self.update()
 
     def paintEvent(self, event):
@@ -649,17 +655,17 @@ class RadarCanvas(QWidget):
         qp.setPen(self._grid_pen)
         for r in range(RING_SPACING, MAX_RADIUS + 1, RING_SPACING):
             qp.drawEllipse(
-                self._center_x - r, self._center_y - r, 
+                self._center_x - r, self._center_y - r,
                 2 * r, 2 * r
             )
-        
+
         qp.setPen(self._light_green_pen)
         qp.drawLine(
-            self._center_x - MAX_RADIUS, self._center_y, 
+            self._center_x - MAX_RADIUS, self._center_y,
             self._center_x + MAX_RADIUS, self._center_y
         )
         qp.drawLine(
-            self._center_x, self._center_y - MAX_RADIUS, 
+            self._center_x, self._center_y - MAX_RADIUS,
             self._center_x, self._center_y + MAX_RADIUS
         )
 
@@ -668,7 +674,7 @@ class RadarCanvas(QWidget):
         for pos_data in self.dot_positions:
             x, y = pos_data['x'], pos_data['y']
             ap = pos_data['ap']
-            
+
             if self.show_threat_colors and ap.threat_level in self.threat_colors:
                 color = self.threat_colors[ap.threat_level]
             else:
@@ -678,7 +684,7 @@ class RadarCanvas(QWidget):
                     int(255 * signal_ratio),
                     0
                 )
-            
+
             if ap.is_vulnerable:
                 qp.setPen(QPen(Qt.red, 3))
                 qp.setBrush(QBrush())
@@ -687,35 +693,35 @@ class RadarCanvas(QWidget):
                     x - vulnerability_radius//2, y - vulnerability_radius//2,
                     vulnerability_radius, vulnerability_radius
                 )
-            
+
             qp.setBrush(QBrush(color))
             qp.setPen(QPen(Qt.black, 2))
             qp.drawEllipse(x - DOT_SIZE//2, y - DOT_SIZE//2, DOT_SIZE, DOT_SIZE)
-            
+
             if pos_data['index'] == self._selected_index:
                 crosshair_size = 20
                 qp.setPen(self._yellow_pen)
                 qp.setBrush(QBrush())
-                
+
                 qp.drawEllipse(x - crosshair_size//2, y - crosshair_size//2,
-                              crosshair_size, crosshair_size)
-                
+                               crosshair_size, crosshair_size)
+
                 line_length = 12
                 qp.drawLine(x - crosshair_size//2 - line_length, y,
-                           x - crosshair_size//2, y)
+                            x - crosshair_size//2, y)
                 qp.drawLine(x + crosshair_size//2, y,
-                           x + crosshair_size//2 + line_length, y)
+                            x + crosshair_size//2 + line_length, y)
                 qp.drawLine(x, y - crosshair_size//2 - line_length,
-                           x, y - crosshair_size//2)
+                            x, y - crosshair_size//2)
                 qp.drawLine(x, y + crosshair_size//2,
-                           x, y + crosshair_size//2 + line_length)
-            
+                            x, y + crosshair_size//2 + line_length)
+
             qp.setPen(self._white_pen)
             qp.setFont(self._normal_font)  # Use normal font instead of small font
-            
+
             text_offset_x = DOT_SIZE + 10
             text_offset_y = 4
-            
+
             ssid = ap.ssid[:15] + ('...' if len(ap.ssid) > 15 else '')
             if not ap.ssid or ap.ssid.strip() == "":
                 ssid = "<HIDDEN>"
@@ -725,38 +731,38 @@ class RadarCanvas(QWidget):
         """Draw statistics overlay"""
         qp.setPen(self._green_pen)
         qp.setFont(self._normal_font)  # Use normal font instead of small font
-        
+
         total = len(self.access_points)
         vulnerable = sum(1 for ap in self.access_points if ap.is_vulnerable)
         critical = sum(1 for ap in self.access_points if ap.threat_level == "CRITICAL")
         high = sum(1 for ap in self.access_points if ap.threat_level == "HIGH")
-        
+
         y_pos = 15
         qp.drawText(10, y_pos, f"TOTAL: {total}")
         qp.drawText(10, y_pos + 15, f"VULN: {vulnerable}")
-        
+
         qp.setPen(QPen(Qt.red, 1))
         qp.drawText(10, y_pos + 30, f"CRIT: {critical}")
-        
+
         qp.setPen(QPen(QColor(255, 165, 0), 1))
         qp.drawText(10, y_pos + 45, f"HIGH: {high}")
 
     def mousePressEvent(self, event):
         """Handle mouse clicks"""
         click_x, click_y = event.x(), event.y()
-        
+
         closest_index = -1
         min_distance = 25
-        
+
         for pos_data in self.dot_positions:
             dx = click_x - pos_data['x']
             dy = click_y - pos_data['y']
             distance = math.sqrt(dx * dx + dy * dy)
-            
+
             if distance < min_distance:
                 min_distance = distance
                 closest_index = pos_data['index']
-        
+
         if closest_index >= 0:
             self._selected_index = closest_index
             selected_ap = self.dot_positions[closest_index]['ap']
@@ -767,35 +773,36 @@ class RadarCanvas(QWidget):
             self.ap_selected.emit(None)
             self.update()
 
+
 class NavigationRadarWindow(QMainWindow):
     """Modern WiFi radar with navigation bar and scrollable panels"""
-    
+
     def __init__(self):
         super().__init__()
-        
+
         # Configuration
         self.max_distance = 150
         self.scan_interval = 5
         self.interface = 'wlan0'
         self.current_view_mode = 'NORMAL'
-        
+
         # Initialize components
         self.scanner = WiFiScanner()
         self.scanner.access_points_found.connect(self.update_access_points)
         self.scanner.scan_error.connect(self.handle_scan_error)
         self.scanner.scan_progress.connect(self.update_progress)
-        
+
         self._setup_ui()
         self._setup_navigation()
         self._setup_connections()
-        
+
         # Start scanning
         self.start_scanning()
-        
+
         # Set window properties
         self.setWindowTitle(f'WiFi Radar Navigation Enhanced v{VERSION}')
         self.set_view_mode('NORMAL')
-        
+
         # Apply dark theme
         self._apply_dark_theme()
 
@@ -1426,115 +1433,115 @@ class NavigationRadarWindow(QMainWindow):
         # Menu bar
         menubar = self.menuBar()
         menubar.setMaximumHeight(NAV_BAR_HEIGHT)
-        
+
         # File menu
         file_menu = menubar.addMenu('File')
-        
+
         new_action = QAction('New Scan', self)
         new_action.setShortcut('Ctrl+N')
         new_action.triggered.connect(self.manual_scan)
         file_menu.addAction(new_action)
-        
+
         save_action = QAction('Save Results', self)
         save_action.setShortcut('Ctrl+S')
         save_action.triggered.connect(self.save_results)
         file_menu.addAction(save_action)
-        
+
         file_menu.addSeparator()
-        
+
         exit_action = QAction('Exit', self)
         exit_action.setShortcut('Ctrl+Q')
         exit_action.triggered.connect(self.close)
         file_menu.addAction(exit_action)
-        
+
         # Tools menu
         tools_menu = menubar.addMenu('Tools')
-        
+
         vuln_scan_action = QAction('Vulnerability Scan', self)
         vuln_scan_action.triggered.connect(self.run_vulnerability_scan)
         tools_menu.addAction(vuln_scan_action)
-        
+
         export_action = QAction('Export Targets', self)
         export_action.triggered.connect(self.export_targets)
         tools_menu.addAction(export_action)
-        
+
         # Settings menu
         settings_menu = menubar.addMenu('Settings')
-        
+
         interface_action = QAction('Interface Settings', self)
         interface_action.triggered.connect(self.show_interface_settings)
         settings_menu.addAction(interface_action)
-        
+
         display_action = QAction('Display Options', self)
         display_action.triggered.connect(self.show_display_options)
         settings_menu.addAction(display_action)
-        
+
         # View menu
         view_menu = menubar.addMenu('View')
-        
+
         # View modes submenu
         view_modes_menu = view_menu.addMenu('View Mode')
-        
+
         compact_action = QAction('Compact (800x500)', self)
         compact_action.setShortcut('Ctrl+1')
         compact_action.triggered.connect(lambda: self.set_view_mode('COMPACT'))
         view_modes_menu.addAction(compact_action)
-        
+
         normal_action = QAction('Normal (1400x800)', self)
         normal_action.setShortcut('Ctrl+2')
         normal_action.triggered.connect(lambda: self.set_view_mode('NORMAL'))
         view_modes_menu.addAction(normal_action)
-        
+
         fullscreen_action = QAction('Fullscreen', self)
         fullscreen_action.setShortcut('F11')
         fullscreen_action.triggered.connect(lambda: self.set_view_mode('FULLSCREEN'))
         view_modes_menu.addAction(fullscreen_action)
-        
+
         view_menu.addSeparator()
-        
+
         refresh_action = QAction('Refresh', self)
         refresh_action.setShortcut('F5')
         refresh_action.triggered.connect(self.manual_scan)
         view_menu.addAction(refresh_action)
-        
+
         zoom_in_action = QAction('Zoom In', self)
         zoom_in_action.setShortcut('Ctrl++')
         zoom_in_action.triggered.connect(self.zoom_in)
         view_menu.addAction(zoom_in_action)
-        
+
         zoom_out_action = QAction('Zoom Out', self)
         zoom_out_action.setShortcut('Ctrl+-')
         zoom_out_action.triggered.connect(self.zoom_out)
         view_menu.addAction(zoom_out_action)
-        
+
         # Help menu
         help_menu = menubar.addMenu('Help')
-        
+
         about_action = QAction('About', self)
         about_action.triggered.connect(self.show_about)
         help_menu.addAction(about_action)
-        
+
         # Toolbar
         toolbar = self.addToolBar('Main')
         toolbar.setMaximumHeight(NAV_BAR_HEIGHT)
         toolbar.setMovable(False)
-        
+
         # Quick action buttons
         scan_btn = QToolButton()
         scan_btn.setText('Scan')
         scan_btn.setToolTip('Start manual scan')
         scan_btn.clicked.connect(self.manual_scan)
         toolbar.addWidget(scan_btn)
-        
+
         toolbar.addSeparator()
-        
+
         vuln_btn = QToolButton()
         vuln_btn.setText('Vuln Only')
         vuln_btn.setToolTip('Show vulnerable targets only')
         vuln_btn.setCheckable(True)
         vuln_btn.toggled.connect(self.toggle_vulnerable_only)
         toolbar.addWidget(vuln_btn)
-        
+
         threat_btn = QToolButton()
         threat_btn.setText('Threat Colors')
         threat_btn.setToolTip('Use threat level colors')
@@ -1542,9 +1549,9 @@ class NavigationRadarWindow(QMainWindow):
         threat_btn.setChecked(True)
         threat_btn.toggled.connect(self.toggle_threat_colors)
         toolbar.addWidget(threat_btn)
-        
+
         toolbar.addSeparator()
-        
+
         # Interface selector
         toolbar.addWidget(QLabel('Interface:'))
         self.interface_combo = QComboBox()
@@ -1552,28 +1559,28 @@ class NavigationRadarWindow(QMainWindow):
         self.interface_combo.setCurrentText(self.interface)
         self.interface_combo.currentTextChanged.connect(self.change_interface)
         toolbar.addWidget(self.interface_combo)
-        
+
         toolbar.addSeparator()
-        
+
         # View mode buttons
         compact_btn = QToolButton()
         compact_btn.setText('Compact')
         compact_btn.setToolTip('Switch to compact view (800x500)')
         compact_btn.clicked.connect(lambda: self.set_view_mode('COMPACT'))
         toolbar.addWidget(compact_btn)
-        
+
         normal_btn = QToolButton()
         normal_btn.setText('Normal')
         normal_btn.setToolTip('Switch to normal view (1400x800)')
         normal_btn.clicked.connect(lambda: self.set_view_mode('NORMAL'))
         toolbar.addWidget(normal_btn)
-        
+
         fullscreen_btn = QToolButton()
         fullscreen_btn.setText('Fullscreen')
         fullscreen_btn.setToolTip('Switch to fullscreen view')
         fullscreen_btn.clicked.connect(lambda: self.set_view_mode('FULLSCREEN'))
         toolbar.addWidget(fullscreen_btn)
-        
+
         # Progress bar
         toolbar.addSeparator()
         self.progress_bar = QProgressBar()
@@ -1587,23 +1594,23 @@ class NavigationRadarWindow(QMainWindow):
         # Central widget
         central = QWidget()
         self.setCentralWidget(central)
-        
+
         # Main layout
         main_layout = QHBoxLayout(central)
         main_layout.setContentsMargins(5, 5, 5, 5)
         main_layout.setSpacing(10)
-        
+
         # Left panel - Radar
         radar_group = QGroupBox("WiFi Penetration Testing Radar")
         radar_layout = QVBoxLayout(radar_group)
-        
+
         self.radar = RadarCanvas(self)
         self.radar.ap_selected.connect(self.on_ap_selected)
         radar_layout.addWidget(self.radar, 0, Qt.AlignCenter)
-        
+
         # Quick controls under radar
         quick_controls = QHBoxLayout()
-        
+
         self.distance_slider = QSlider(Qt.Horizontal)
         self.distance_slider.setMinimum(50)
         self.distance_slider.setMaximum(500)
@@ -1611,107 +1618,107 @@ class NavigationRadarWindow(QMainWindow):
         self.distance_slider.valueChanged.connect(self.change_max_distance)
         quick_controls.addWidget(QLabel("Range:"))
         quick_controls.addWidget(self.distance_slider)
-        
+
         self.distance_label = QLabel(f"{self.max_distance}m")
         quick_controls.addWidget(self.distance_label)
-        
+
         radar_layout.addLayout(quick_controls)
-        
+
         main_layout.addWidget(radar_group, 2)
-        
+
         # Right panel - Scrollable side panel
         right_panel = QWidget()
         right_layout = QVBoxLayout(right_panel)
         right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(5)
-        
+
         # Target Analysis Section
         details_group = QGroupBox("Target Analysis")
         details_layout = QVBoxLayout(details_group)
-        
+
         # Scrollable text area for target details
         details_scroll = QScrollArea()
         details_scroll.setWidgetResizable(True)
         details_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         details_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         details_scroll.setMaximumHeight(300)
-        
+
         self.details_text = QTextEdit()
         self.details_text.setReadOnly(True)
         self.details_text.setPlainText("Select an access point to view detailed analysis...")
-        
+
         # Set larger font for details text
         details_font = QFont("JetBrains Mono", 11)
         self.details_text.setFont(details_font)
-        
+
         details_scroll.setWidget(self.details_text)
         details_layout.addWidget(details_scroll)
-        
+
         right_layout.addWidget(details_group)
-        
+
         # Vulnerability Assessment Section
         vuln_group = QGroupBox("Vulnerability Assessment")
         vuln_layout = QVBoxLayout(vuln_group)
-        
+
         # Scrollable vulnerability list
         vuln_scroll = QScrollArea()
         vuln_scroll.setWidgetResizable(True)
         vuln_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         vuln_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         vuln_scroll.setMaximumHeight(250)
-        
+
         self.vuln_list = QListWidget()
-        
+
         # Set larger font for vulnerability list
         vuln_font = QFont("JetBrains Mono", 11)
         self.vuln_list.setFont(vuln_font)
-        
+
         vuln_scroll.setWidget(self.vuln_list)
         vuln_layout.addWidget(vuln_scroll)
-        
+
         right_layout.addWidget(vuln_group)
-        
+
         # Target List Section
         targets_group = QGroupBox("Target List")
         targets_layout = QVBoxLayout(targets_group)
-        
+
         # Scrollable target tree
         targets_scroll = QScrollArea()
         targets_scroll.setWidgetResizable(True)
         targets_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         targets_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        
+
         self.targets_tree = QTreeWidget()
         self.targets_tree.setHeaderLabels(['SSID', 'Security', 'Signal', 'Threat'])
         self.targets_tree.setRootIsDecorated(False)
         self.targets_tree.itemClicked.connect(self.on_target_selected)
-        
+
         # Set larger font for tree widget
         tree_font = QFont("JetBrains Mono", 11)  # Increased size
         self.targets_tree.setFont(tree_font)
         header_font = QFont("JetBrains Mono", 11, QFont.Bold)  # Bold headers
         self.targets_tree.header().setFont(header_font)
-        
+
         targets_scroll.setWidget(self.targets_tree)
         targets_layout.addWidget(targets_scroll)
-        
+
         right_layout.addWidget(targets_group)
-        
+
         main_layout.addWidget(right_panel, 1)
-        
+
         # Status bar
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
-        
+
         # Add permanent widgets to status bar
         self.mode_label = QLabel(f"Mode: {self.current_view_mode}")
         self.mode_label.setStyleSheet("color: #00FF00; font-weight: bold; padding: 2px 10px;")
         self.status_bar.addPermanentWidget(self.mode_label)
-        
+
         self.interface_label = QLabel(f"Interface: {self.interface}")
         self.interface_label.setStyleSheet("color: #00FF00; font-weight: bold; padding: 2px 10px;")
         self.status_bar.addPermanentWidget(self.interface_label)
-        
+
         self.status_bar.showMessage(f"Ready - {self.current_view_mode} Mode")
 
     def _setup_connections(self):
@@ -1729,28 +1736,29 @@ class NavigationRadarWindow(QMainWindow):
         """Update access points display"""
         self.radar.update_access_points(aps)
         self.update_targets_tree(aps)
-        self.status_bar.showMessage(f"Found {len(aps)} access points - {sum(1 for ap in aps if ap.is_vulnerable)} vulnerable")
+        self.status_bar.showMessage(
+            f"Found {len(aps)} access points - {sum(1 for ap in aps if ap.is_vulnerable)} vulnerable")
 
     def update_targets_tree(self, aps: List[AccessPoint]):
         """Update the targets tree widget"""
         self.targets_tree.clear()
-        
+
         for ap in aps:
             item = QTreeWidgetItem()
-            
+
             # SSID
             ssid = ap.ssid if ap.ssid else "<HIDDEN>"
             item.setText(0, ssid[:20] + ('...' if len(ssid) > 20 else ''))
-            
+
             # Security
             item.setText(1, ap.security)
-            
+
             # Signal
             item.setText(2, f"{ap.signal_dbm:.0f}dBm")
-            
+
             # Threat Level
             item.setText(3, ap.threat_level)
-            
+
             # Color coding based on threat level
             if ap.threat_level == "CRITICAL":
                 for i in range(4):
@@ -1761,12 +1769,12 @@ class NavigationRadarWindow(QMainWindow):
             elif ap.threat_level == "MEDIUM":
                 for i in range(4):
                     item.setBackground(i, QColor(80, 80, 0))
-            
+
             # Store AP reference
             item.setData(0, Qt.UserRole, ap)
-            
+
             self.targets_tree.addTopLevelItem(item)
-        
+
         # Auto-resize columns
         for i in range(4):
             self.targets_tree.resizeColumnToContents(i)
@@ -1783,7 +1791,7 @@ class NavigationRadarWindow(QMainWindow):
             self.details_text.setPlainText("Select an access point to view detailed analysis...")
             self.vuln_list.clear()
             return
-        
+
         # Update target analysis
         details = f"""TARGET ANALYSIS
         
@@ -1816,16 +1824,16 @@ MAC OUI: {ap.bssid[:8]}
 Band: {'2.4GHz' if ap.frequency < 3000 else '5GHz'}
 Channel Width: Auto-detected
 """
-        
+
         self.details_text.setPlainText(details)
-        
+
         # Update vulnerability list
         self.vuln_list.clear()
-        
+
         if ap.attack_vectors:
             for vector in ap.attack_vectors:
                 item = QListWidgetItem(f"• {vector}")
-                
+
                 # Color code by severity
                 if "CRITICAL" in vector.upper() or "BROKEN" in vector.upper():
                     item.setBackground(QColor(80, 0, 0))
@@ -1833,7 +1841,7 @@ Channel Width: Auto-detected
                     item.setBackground(QColor(80, 40, 0))
                 elif "MEDIUM" in vector.upper():
                     item.setBackground(QColor(80, 80, 0))
-                
+
                 self.vuln_list.addItem(item)
         else:
             item = QListWidgetItem("No specific attack vectors identified")
@@ -1870,26 +1878,26 @@ Channel Width: Auto-detected
     def set_view_mode(self, mode: str):
         """Set the view mode (COMPACT, NORMAL, FULLSCREEN)"""
         self.current_view_mode = mode
-        
+
         if mode == 'FULLSCREEN':
             if not self.isFullScreen():
                 self.showFullScreen()
-            self.status_bar.showMessage(f"View Mode: Fullscreen")
+            self.status_bar.showMessage("View Mode: Fullscreen")
             self.mode_label.setText("Mode: FULLSCREEN")
         else:
             if self.isFullScreen():
                 self.showNormal()
-            
+
             if mode in VIEW_MODES:
                 width, height = VIEW_MODES[mode]
                 self.resize(width, height)
-                
+
                 # Adjust UI elements based on view mode
                 if mode == 'COMPACT':
                     self._setup_compact_layout()
                 else:  # NORMAL
                     self._setup_normal_layout()
-                
+
                 self.status_bar.showMessage(f"View Mode: {mode} ({width}x{height})")
                 self.mode_label.setText(f"Mode: {mode}")
 
@@ -1897,23 +1905,23 @@ Channel Width: Auto-detected
         """Setup compact layout for small screens"""
         # Adjust radar size for compact mode
         self.radar.setFixedSize(250, 250)
-        
+
         # Reduce margins and spacing for compact mode
         central = self.centralWidget()
         main_layout = central.layout()
         main_layout.setContentsMargins(2, 2, 2, 2)
         main_layout.setSpacing(5)
-        
+
         # Adjust side panel widths
         right_panel = central.layout().itemAt(1).widget()
         if right_panel:
             right_panel.setMaximumWidth(300)
-        
+
         # Hide some toolbar elements in compact mode
         for action in self.menuBar().actions():
             if action.text() in ['Tools', 'Help']:
                 action.setVisible(False)
-        
+
         # Reduce font sizes for compact mode
         compact_font = QFont("JetBrains Mono", 9)
         self.details_text.setFont(compact_font)
@@ -1924,22 +1932,22 @@ Channel Width: Auto-detected
         """Setup normal layout"""
         # Restore normal radar size
         self.radar.setFixedSize(RADAR_SIZE, RADAR_SIZE)
-        
+
         # Restore normal margins and spacing
         central = self.centralWidget()
         main_layout = central.layout()
         main_layout.setContentsMargins(5, 5, 5, 5)
         main_layout.setSpacing(10)
-        
+
         # Remove side panel width restrictions
         right_panel = central.layout().itemAt(1).widget()
         if right_panel:
             right_panel.setMaximumWidth(16777215)  # Default maximum width
-        
+
         # Show all toolbar elements
         for action in self.menuBar().actions():
             action.setVisible(True)
-        
+
         # Restore normal font sizes
         normal_font = QFont("JetBrains Mono", 11)
         self.details_text.setFont(normal_font)
@@ -2045,7 +2053,7 @@ Channel Width: Auto-detected
         msg = QMessageBox(self)
         msg.setWindowTitle("About WiFi Radar Navigation Enhanced")
         msg.setIcon(QMessageBox.Information)
-        
+
         about_text = f"""
 <div style="font-family: 'JetBrains Mono', monospace; color: #00FF00;">
 <h2 style="color: #00FF00; text-align: center;">WiFi Radar Navigation Enhanced v{VERSION}</h2>
@@ -2088,7 +2096,7 @@ Channel Width: Auto-detected
 </p>
 </div>
         """
-        
+
         msg.setText(about_text)
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
@@ -2098,21 +2106,23 @@ Channel Width: Auto-detected
         self.scanner.stop_scanning()
         event.accept()
 
+
 def main():
     """Main application entry point"""
     app = QApplication(sys.argv)
-    
+
     # Set application properties
     app.setApplicationName("WiFi Radar Navigation Enhanced")
     app.setApplicationVersion(VERSION)
     app.setOrganizationName("WiFi Security Tools")
-    
+
     # Create and show main window
     window = NavigationRadarWindow()
     window.show()
-    
+
     # Run application
     sys.exit(app.exec_())
+
 
 if __name__ == '__main__':
     main()
