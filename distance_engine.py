@@ -56,8 +56,8 @@ class DistanceCalculationEngine:
                 signal_dbm, frequency_mhz, tx_power_dbm
             )
             
-            # Combine estimates using weighted average
-            weights = {"fspl": 0.3, "log_normal": 0.5, "itu": 0.2}
+            # Combine estimates using weighted average (favor log-normal for indoor)
+            weights = {"fspl": 0.2, "log_normal": 0.6, "itu": 0.2}
             
             combined_distance = (
                 weights["fspl"] * fspl_distance +
@@ -71,7 +71,7 @@ class DistanceCalculationEngine:
             )
             
             # Ensure reasonable bounds
-            final_distance = max(0.5, min(2000.0, corrected_distance))
+            final_distance = max(0.5, min(500.0, corrected_distance))  # Cap at 500m instead of 2000m
             
             logger.debug(f"Distance calculation: FSPL={fspl_distance:.1f}m, "
                         f"LogNormal={log_normal_distance:.1f}m, ITU={itu_distance:.1f}m, "
@@ -206,7 +206,7 @@ class DistanceCalculationEngine:
         # Environmental factor corrections based on signal characteristics
         if signal_dbm < -80:
             # Very weak signal suggests multiple obstacles or long distance
-            corrected_distance *= 1.5
+            corrected_distance *= 1.2  # Reduced from 1.5
         elif signal_dbm > -40:
             # Very strong signal suggests close proximity or direct line of sight
             corrected_distance *= 0.8

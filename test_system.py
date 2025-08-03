@@ -29,10 +29,9 @@ def test_imports():
 def test_config_system():
     """Test configuration loading"""
     try:
-        import config_manager
-        cm = config_manager.ConfigManager()
-        print(f"✓ Configuration loaded: {len(cm.security_profiles)} security profiles")
-        print(f"✓ WiFi scanning config: {cm.config['wifi_scanning']['channel_range']}")
+        from config_manager import config_manager
+        print(f"✓ Configuration loaded: {len(config_manager.security_profiles)} security profiles")
+        print(f"✓ WiFi scanning config: {config_manager.config['wifi_scanner']['channel_range']}")
         return True
     except Exception as e:
         print(f"✗ Config test failed: {e}")
@@ -41,13 +40,12 @@ def test_config_system():
 def test_vendor_service():
     """Test vendor service"""
     try:
-        import vendor_service
-        vs = vendor_service.VendorService()
-        print(f"✓ Vendor database: {len(vs.oui_database)} entries")
+        from vendor_service import vendor_service
+        print(f"✓ Vendor database: {len(vendor_service.oui_database)} entries")
         
         # Test vendor lookup
         test_mac = "00:1B:63:84:45:E6"
-        vendor = vs.get_vendor(test_mac)
+        vendor = vendor_service.get_vendor(test_mac)
         print(f"✓ Vendor lookup test: {test_mac} -> {vendor}")
         return True
     except Exception as e:
@@ -57,17 +55,17 @@ def test_vendor_service():
 def test_security_engine():
     """Test security analysis"""
     try:
-        import security_engine
-        se = security_engine.SecurityEngine()
+        from security_engine import security_engine
         
         # Test security analysis
-        test_ap = {
-            'ssid': 'TestNetwork',
-            'encryption': 'WEP',
-            'signal': -45
-        }
-        analysis = se.analyze_access_point(test_ap)
-        print(f"✓ Security analysis: {analysis['threat_level']} (score: {analysis['vulnerability_score']})")
+        analysis = security_engine.analyze_access_point(
+            ssid='TestNetwork',
+            bssid='00:1B:63:84:45:E6',
+            security='WEP',
+            signal_dbm=-45,
+            frequency=2412
+        )
+        print(f"✓ Security analysis: {analysis.threat_level} (score: {analysis.vulnerability_score})")
         return True
     except Exception as e:
         print(f"✗ Security engine test failed: {e}")
@@ -76,11 +74,10 @@ def test_security_engine():
 def test_distance_engine():
     """Test distance calculation"""
     try:
-        import distance_engine
-        de = distance_engine.DistanceEngine()
+        from distance_engine import distance_engine
         
         # Test distance calculation
-        distance = de.calculate_distance(-45, 2412)  # -45 dBm at 2412 MHz
+        distance = distance_engine.calculate_distance(-45, 2412)  # -45 dBm at 2412 MHz
         print(f"✓ Distance calculation: {distance:.2f} meters")
         return True
     except Exception as e:
@@ -94,10 +91,34 @@ def test_wifi_scanner():
         scanner = WiFiScanner()
         print("✓ WiFiScanner initialized")
         
-        # Test parsing (without actual scan)
-        test_output = "Cell 01 - Address: 00:1B:63:84:45:E6\n          ESSID:\"TestNetwork\"\n          Mode:Master\n          Frequency:2.437 GHz (Channel 6)\n          Quality:70/70  Signal level:-45 dBm\n          Encryption key:on\n          IE: IEEE 802.11i/WPA2 Version 1"
+        # Test parsing (with realistic scan output)
+        test_output = """BSS 00:1b:63:84:45:e6(on wlan0) -- associated
+	freq: 2437
+	beacon interval: 100
+	capability: ESS Privacy ShortSlotTime (0x0411)
+	signal: -45.00 dBm
+	last seen: 1024 ms ago
+	Information elements from Probe Response frame:
+	SSID: Apple_Network
+	Supported rates: 1.0* 2.0* 5.5* 11.0* 6.0 9.0 12.0 18.0 
+	DS Parameter set: channel 6
+	ERP: <no flags>
+	Extended supported rates: 24.0 36.0 48.0 54.0 
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+		 * Authentication suites: PSK
+		 * RSN capabilities: 0x0000
+BSS 00:0a:e4:12:34:56(on wlan0)
+	freq: 2462
+	signal: -67.00 dBm
+	SSID: NETGEAR_Open
+	capability: ESS (0x0001)"""
         networks = scanner.parse_scan_output(test_output)
         print(f"✓ Parsing test: Found {len(networks)} networks")
+        if networks:
+            for i, network in enumerate(networks):
+                print(f"  Network {i+1}: {network['ssid']} ({network['security']}) - {network['signal']} dBm")
         return True
     except Exception as e:
         print(f"✗ WiFi scanner test failed: {e}")

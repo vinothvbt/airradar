@@ -1,0 +1,373 @@
+{
+  "wifi_scanner": {
+    "interface_detection": {
+      "commands": {
+        "scan_command": ["iw", "dev", "{interface}", "scan"],
+        "scan_command_fallback": ["iwlist", "{interface}", "scan"],
+        "interface_list": ["iw", "dev"],
+        "interface_list_fallback": ["iwconfig"]
+      },
+      "timeouts": {
+        "scan_timeout": 15,
+        "interface_timeout": 5
+      },
+      "retries": {
+        "max_scan_retries": 3,
+        "retry_delay": 2
+      }
+    },
+    "parsing": {
+      "patterns": {
+        "mac_address": "([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})",
+        "signal_strength": "signal:\\s*(-\\d+\\.?\\d*)\\s*dBm",
+        "signal_strength_alt": "Signal level=(-\\d+)\\s*dBm",
+        "frequency": "freq:\\s*(\\d+)",
+        "frequency_alt": "Frequency:(\\d+\\.\\d+)\\s*GHz",
+        "channel": "channel\\s*(\\d+)",
+        "ssid": "SSID:\\s*(.+)",
+        "ssid_alt": "ESSID:\"([^\"]*)\""
+      },
+      "security_keywords": {
+        "WPA3": ["WPA3", "SAE", "OWE"],
+        "WPA2": ["WPA2", "RSN", "IEEE 802.11i"],
+        "WPA": ["WPA", "TKIP"],
+        "WEP": ["WEP", "Privacy", "Wired Equivalent Privacy"],
+        "Open": ["NO ENCRYPTION", "Open System"]
+      }
+    },
+    "channel_range": {
+      "2.4ghz": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+      "5ghz": [36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 149, 153, 157, 161, 165],
+      "6ghz": [1, 5, 9, 13, 17, 21, 25, 29, 33, 37, 41, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93]
+    }
+  },
+  "security_analysis": {
+    "vulnerability_scoring": {
+      "security_types": {
+        "Open": {
+          "base_score": 95,
+          "risk_level": "CRITICAL",
+          "attack_vectors": [
+            "Direct Access - No Authentication Required",
+            "Passive Traffic Monitoring",
+            "Man-in-the-Middle Attacks",
+            "Session Hijacking",
+            "Evil Twin AP Setup",
+            "Rogue Access Point Attacks",
+            "DNS Spoofing",
+            "ARP Poisoning"
+          ]
+        },
+        "WEP": {
+          "base_score": 90,
+          "risk_level": "CRITICAL",
+          "attack_vectors": [
+            "WEP Key Cracking (Aircrack-ng)",
+            "IV Collision Attacks",
+            "Chopchop Attack",
+            "Fragmentation Attack",
+            "PTW Attack",
+            "Statistical Attacks",
+            "Dictionary Attacks on Keys"
+          ]
+        },
+        "WPA": {
+          "base_score": 50,
+          "risk_level": "HIGH",
+          "attack_vectors": [
+            "WPA Handshake Capture",
+            "Dictionary Attacks (Hashcat)",
+            "Brute Force Attacks",
+            "TKIP MIC Key Recovery",
+            "Beck-Tews Attack",
+            "WPS PIN Attacks",
+            "Evil Twin with Captive Portal"
+          ]
+        },
+        "WPA2": {
+          "base_score": 35,
+          "risk_level": "MEDIUM",
+          "attack_vectors": [
+            "PMKID Attack (Hashcat 22000)",
+            "WPA2 Handshake Capture",
+            "KRACK Attack (Key Reinstallation)",
+            "WPS PIN Brute Force",
+            "Pixie Dust Attack",
+            "Dictionary/Mask Attacks",
+            "Social Engineering"
+          ]
+        },
+        "WPA3": {
+          "base_score": 15,
+          "risk_level": "LOW",
+          "attack_vectors": [
+            "SAE (Dragonfly) Downgrade Attack",
+            "Side-Channel Attacks",
+            "Implementation Vulnerabilities",
+            "Physical Access Attacks",
+            "Social Engineering",
+            "Router Firmware Exploitation"
+          ]
+        }
+      },
+      "signal_strength_modifiers": {
+        "excellent": {
+          "min": -30,
+          "bonus": 20,
+          "description": "Excellent signal - highly accessible"
+        },
+        "very_good": {
+          "min": -50,
+          "bonus": 15,
+          "description": "Very good signal - easily accessible"
+        },
+        "good": {
+          "min": -60,
+          "bonus": 10,
+          "description": "Good signal - accessible"
+        },
+        "fair": {
+          "min": -70,
+          "bonus": 5,
+          "description": "Fair signal - requires positioning"
+        },
+        "poor": {
+          "min": -80,
+          "bonus": 0,
+          "description": "Poor signal - limited access"
+        },
+        "very_poor": {
+          "min": -100,
+          "bonus": -5,
+          "description": "Very poor signal - difficult access"
+        }
+      },
+      "threat_levels": {
+        "CRITICAL": {
+          "min": 80,
+          "color": "#ff1744",
+          "description": "Immediate security risk - exploit trivial"
+        },
+        "HIGH": {
+          "min": 60,
+          "color": "#ff6d00",
+          "description": "High security risk - exploitation likely"
+        },
+        "MEDIUM": {
+          "min": 40,
+          "color": "#ff9800",
+          "description": "Medium security risk - exploitation possible"
+        },
+        "LOW": {
+          "min": 20,
+          "color": "#ffeb3b",
+          "description": "Low security risk - hardened configuration"
+        },
+        "MINIMAL": {
+          "min": 0,
+          "color": "#4caf50",
+          "description": "Minimal risk - strong security implementation"
+        }
+      }
+    }
+  },
+  "distance_calculation": {
+    "formulas": {
+      "environmental_factors": {
+        "outdoor": {
+          "path_loss_exponent": 2.0,
+          "reference_distance": 1.0,
+          "reference_loss": 40.0
+        },
+        "indoor": {
+          "path_loss_exponent": 2.7,
+          "reference_distance": 1.0,
+          "reference_loss": 40.0
+        },
+        "urban": {
+          "path_loss_exponent": 3.5,
+          "reference_distance": 1.0,
+          "reference_loss": 46.0
+        }
+      },
+      "frequency_corrections": {
+        "2.4ghz": {
+          "min": 2400,
+          "max": 2500,
+          "multiplier": 1.0,
+          "description": "2.4 GHz ISM band"
+        },
+        "5ghz": {
+          "min": 5000,
+          "max": 6000,
+          "multiplier": 0.8,
+          "description": "5 GHz UNII band - higher attenuation"
+        },
+        "6ghz": {
+          "min": 6000,
+          "max": 7000,
+          "multiplier": 0.7,
+          "description": "6 GHz band - highest attenuation"
+        }
+      },
+      "signal_ranges": {
+        "excellent": {
+          "min": -30,
+          "multiplier": 0.8
+        },
+        "very_good": {
+          "min": -50,
+          "multiplier": 0.9
+        },
+        "good": {
+          "min": -60,
+          "multiplier": 1.0
+        },
+        "fair": {
+          "min": -70,
+          "multiplier": 1.2
+        },
+        "poor": {
+          "min": -80,
+          "multiplier": 1.5
+        },
+        "very_poor": {
+          "min": -100,
+          "multiplier": 2.0
+        }
+      }
+    }
+  },
+  "vendor_detection": {
+    "oui_database_source": "https://standards-oui.ieee.org/oui/oui.txt",
+    "local_database": "oui_database.json",
+    "update_interval_days": 30,
+    "fallback_vendors": {
+      "common_ouis": {
+        "00:1B:63": "Apple Inc.",
+        "00:23:DF": "Apple Inc.",
+        "00:25:00": "Apple Inc.",
+        "00:26:08": "Apple Inc.",
+        "3C:15:C2": "Apple Inc.",
+        "A4:C3:61": "Apple Inc.",
+        "BC:D0:74": "Apple Inc.",
+        "00:0F:CC": "Cisco Systems",
+        "00:1E:F7": "Cisco Systems",
+        "00:23:04": "Cisco Systems",
+        "00:26:CA": "Cisco Systems",
+        "50:06:04": "Cisco Systems",
+        "00:13:46": "Intel Corporation",
+        "00:15:00": "Intel Corporation",
+        "00:19:D2": "Intel Corporation",
+        "00:21:6A": "Intel Corporation",
+        "AC:22:0B": "Intel Corporation",
+        "00:0A:E4": "Netgear Inc.",
+        "00:09:5B": "Netgear Inc.",
+        "00:14:6C": "Netgear Inc.",
+        "00:1E:2A": "Netgear Inc.",
+        "A0:21:B7": "Netgear Inc.",
+        "00:1A:70": "Linksys LLC",
+        "00:13:10": "Linksys LLC",
+        "00:14:BF": "Linksys LLC",
+        "00:18:39": "Linksys LLC",
+        "48:F8:B3": "Linksys LLC",
+        "00:07:7D": "Belkin International Inc.",
+        "00:11:50": "Belkin International Inc.",
+        "00:17:3F": "Belkin International Inc.",
+        "94:44:52": "Belkin International Inc.",
+        "00:05:4E": "D-Link Corporation",
+        "00:0D:88": "D-Link Corporation",
+        "00:15:E9": "D-Link Corporation",
+        "00:1B:11": "D-Link Corporation",
+        "C8:D3:A3": "D-Link Corporation",
+        "00:08:54": "Netgear Inc.",
+        "00:1D:7E": "TP-Link Technologies Co.Ltd.",
+        "14:CC:20": "TP-Link Technologies Co.Ltd.",
+        "50:C7:BF": "TP-Link Technologies Co.Ltd.",
+        "A4:2B:B0": "TP-Link Technologies Co.Ltd.",
+        "00:1F:C6": "ASUS",
+        "00:22:15": "ASUS",
+        "00:26:18": "ASUS",
+        "2C:56:DC": "ASUS",
+        "AC:9E:17": "ASUS"
+      }
+    }
+  },
+  "visualization": {
+    "radar_modes": {
+      "grid": {
+        "name": "Grid Mode",
+        "description": "Organized grid layout preventing AP overlaps",
+        "settings": {
+          "grid_size": 6,
+          "spacing": 60,
+          "show_grid_lines": true,
+          "intelligent_positioning": true
+        }
+      },
+      "polar": {
+        "name": "Polar Mode", 
+        "description": "Traditional radar sweep with distance rings",
+        "settings": {
+          "ring_count": 6,
+          "ring_spacing": 30,
+          "sweep_animation": true,
+          "angle_labels": true
+        }
+      },
+      "heatmap": {
+        "name": "Heatmap Mode",
+        "description": "Signal strength visualization with threat colors",
+        "settings": {
+          "gradient_colors": ["#00ff00", "#ffff00", "#ff8800", "#ff0000"],
+          "blur_radius": 20,
+          "intensity_scale": 0.8
+        }
+      }
+    },
+    "colors": {
+      "background": "#0a0a0a",
+      "grid_lines": "#333333",
+      "text": "#00ff00",
+      "accent": "#00ff00",
+      "critical": "#ff1744",
+      "high": "#ff6d00",
+      "medium": "#ff9800",
+      "low": "#ffeb3b",
+      "minimal": "#4caf50",
+      "unknown": "#9e9e9e"
+    }
+  },
+  "ui_layout": {
+    "window_sizes": {
+      "compact": {
+        "width": 800,
+        "height": 500
+      },
+      "normal": {
+        "width": 1400,
+        "height": 800
+      },
+      "fullscreen": {
+        "maximize": true
+      }
+    },
+    "panels": {
+      "radar_panel": {
+        "min_width": 400,
+        "min_height": 400
+      },
+      "info_panel": {
+        "min_width": 300,
+        "max_width": 500
+      }
+    }
+  },
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "wifi_radar.log",
+    "max_file_size": "10MB",
+    "backup_count": 5
+  }
+}
