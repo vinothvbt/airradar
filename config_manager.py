@@ -96,7 +96,12 @@ class ConfigurationManager:
     def _parse_security_profiles(self):
         """Parse security profiles from configuration"""
         try:
-            security_types = self.config.get("security_analysis", {}).get("vulnerability_scoring", {}).get("security_types", {})
+            # Try new format first (from config.json)
+            security_types = self.config.get("security_profiles", {})
+            
+            # If empty, try old format for backward compatibility
+            if not security_types:
+                security_types = self.config.get("security_analysis", {}).get("vulnerability_scoring", {}).get("security_types", {})
             
             for sec_type, profile_data in security_types.items():
                 self.security_profiles[sec_type] = SecurityProfile(
@@ -113,22 +118,20 @@ class ConfigurationManager:
     def _parse_signal_ranges(self):
         """Parse signal strength ranges from configuration"""
         try:
-            # Distance calculation ranges
-            signal_ranges = self.config.get("distance_calculation", {}).get("formulas", {}).get("signal_ranges", {})
+            # Try new format first (from config.json)
+            signal_ranges = self.config.get("signal_strength_ranges", {})
+            
+            # If empty, try old format for backward compatibility
+            if not signal_ranges:
+                signal_ranges = self.config.get("distance_calculation", {}).get("formulas", {}).get("signal_ranges", {})
             
             for range_name, range_data in signal_ranges.items():
                 self.signal_ranges[range_name] = SignalRange(
-                    min_dbm=range_data.get("min", -100),
-                    multiplier=range_data.get("multiplier", 1.0)
+                    min_dbm=range_data.get("min_dbm", -70),
+                    multiplier=range_data.get("multiplier", 1.0),
+                    bonus=range_data.get("bonus", 0)
                 )
-            
-            # Security analysis signal modifiers
-            signal_modifiers = self.config.get("security_analysis", {}).get("vulnerability_scoring", {}).get("signal_strength_modifiers", {})
-            
-            for range_name, modifier_data in signal_modifiers.items():
-                if range_name in self.signal_ranges:
-                    self.signal_ranges[range_name].bonus = modifier_data.get("bonus", 0)
-                    
+                
             logger.info(f"Loaded {len(self.signal_ranges)} signal ranges")
             
         except Exception as e:
@@ -137,7 +140,12 @@ class ConfigurationManager:
     def _parse_visualization_modes(self):
         """Parse visualization modes from configuration"""
         try:
-            viz_modes = self.config.get("visualization", {}).get("radar_modes", {})
+            # Try new format first (from config.json)
+            viz_modes = self.config.get("visualization_modes", {})
+            
+            # If empty, try old format for backward compatibility
+            if not viz_modes:
+                viz_modes = self.config.get("visualization", {}).get("radar_modes", {})
             
             for mode_name, mode_data in viz_modes.items():
                 self.visualization_modes[mode_name] = VisualizationMode(
@@ -249,3 +257,6 @@ class ConfigurationManager:
 
 # Global configuration instance
 config_manager = ConfigurationManager()
+
+# Alias for backward compatibility
+ConfigManager = ConfigurationManager

@@ -253,3 +253,6 @@ class VendorDetectionService:
 
 # Global vendor detection service instance
 vendor_service = VendorDetectionService()
+
+# Alias for backward compatibility
+VendorService = VendorDetectionService

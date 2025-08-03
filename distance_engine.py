@@ -289,3 +289,6 @@ class DistanceCalculationEngine:
 
 # Global distance calculation engine instance
 distance_engine = DistanceCalculationEngine()
+
+# Alias for backward compatibility
+DistanceEngine = DistanceCalculationEngine

@@ -59,7 +59,45 @@ class SecurityAnalysisEngine:
             ]
         }
     
-    def analyze_access_point(self, ssid: str, bssid: str, security: str, 
+    def analyze_security(self, ssid: str, security: str) -> Dict[str, str]:
+        """Simple security analysis method for testing"""
+        # Use default values for missing parameters
+        result = self.analyze_access_point(ssid, "00:00:00:00:00:00", security, -50.0, 2400)
+        return {
+            "threat_level": result.threat_level,
+            "vulnerability_score": result.vulnerability_score
+        }
+    
+    def analyze_access_point_dict(self, ap_dict: Dict[str, any]) -> Dict[str, any]:
+        """Analyze access point from dictionary (for backward compatibility)"""
+        ssid = ap_dict.get('ssid', 'Unknown')
+        bssid = ap_dict.get('bssid', '00:00:00:00:00:00')
+        encryption = ap_dict.get('encryption', 'Open')
+        signal = float(ap_dict.get('signal', -50))
+        frequency = int(ap_dict.get('frequency', 2400))
+        
+        result = self.analyze_access_point(ssid, bssid, encryption, signal, frequency)
+        return {
+            "threat_level": result.threat_level,
+            "vulnerability_score": result.vulnerability_score,
+            "attack_vectors": result.attack_vectors,
+            "risk_factors": result.risk_factors,
+            "recommendations": result.recommendations,
+            "confidence": result.confidence
+        }
+
+    def analyze_access_point(self, *args, **kwargs):
+        """Analyze access point - supports both dict and individual parameter signatures"""
+        if len(args) == 1 and isinstance(args[0], dict):
+            # Called with dictionary (e.g., from tests)
+            return self.analyze_access_point_dict(args[0])
+        elif len(args) >= 5:
+            # Called with individual parameters
+            return self._analyze_access_point_full(*args, **kwargs)
+        else:
+            raise ValueError("Invalid arguments for analyze_access_point")
+    
+    def _analyze_access_point_full(self, ssid: str, bssid: str, security: str, 
                            signal_dbm: float, frequency: int) -> SecurityAnalysisResult:
         """Perform comprehensive security analysis of access point"""
         
@@ -373,3 +411,6 @@ class SecurityAnalysisEngine:
 
 # Global security analysis engine instance
 security_engine = SecurityAnalysisEngine()
+
+# Alias for backward compatibility
+SecurityEngine = SecurityAnalysisEngine
