@@ -94,13 +94,12 @@ results/
 ehthumbs.db
 Thumbs.db
 
-# Application specific databases and generated files
+# Application specific
 wifi_*.db
-*.db
-*.sqlite
-*.sqlite3
+*.json
 oui_database.json
+config.json
 wifi_radar_nav_config.json
 
-# Test output
+# Test files
 test_output/
