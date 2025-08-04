@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+*.pyc
+*.pyo
+*.pyd
 .Python
 build/
 develop-eggs/
@@ -39,22 +42,31 @@ MANIFEST
 Thumbs.db
 
 # Virtual Environment
-.venv/
+.env
+.venv
+env/
 venv/
 ENV/
-env/
+env.bak/
+venv.bak/
 
 # Logs
 *.log
+logs/
 
 # Configuration (if sensitive)
 config.json
 oui_database.json
+wifi_radar_nav_config.json
 
 # Testing
 .coverage
 .pytest_cache/
 .tox/
+test_output/
+
+# Application specific
+wifi_*.db
 
 # Temporary files
 *.tmp
