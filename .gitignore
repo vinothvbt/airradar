@@ -1,5 +1,8 @@
-# Python cache
+# Python cache files
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 *.py[cod]
 *$py.class
 *.so
@@ -54,7 +57,7 @@ ipython_config.py
 # pyenv
 .python-version
 
-# Environments
+# Virtual environments
 .env
 .venv
 env/
@@ -63,14 +66,26 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDE
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# Logs
+*.log
+logs/
+wifi_radar.log*
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+temp/
+results/
+
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -79,11 +94,13 @@ venv.bak/
 ehthumbs.db
 Thumbs.db
 
-# Project specific
-wifi_radar.log*
-oui_database.json
+# Application specific databases and generated files
+wifi_*.db
 *.db
 *.sqlite
 *.sqlite3
-results/
-temp/
+oui_database.json
+wifi_radar_nav_config.json
+
+# Test output
+test_output/
