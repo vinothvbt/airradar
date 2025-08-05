@@ -32,14 +32,31 @@ from PyQt5.QtGui import (
 )
 from PyQt5.QtCore import (
     Qt, QTimer, QThread, pyqtSignal, QPointF, QRectF, QPoint, QSize,
-    QRect, QMutex
+    QRect, QMutex, QPropertyAnimation, QEasingCurve
 )
+
+# Import animation framework
+try:
+    from ui_animations import animation_manager, EnhancedWidget, StatusIndicator, ProgressIndicator
+    ANIMATIONS_AVAILABLE = True
+except ImportError:
+    print("Warning: Animation framework not available, using basic UI")
+    ANIMATIONS_AVAILABLE = False
+    
+    # Fallback classes
+    class EnhancedWidget(QWidget):
+        pass
+    class StatusIndicator(QWidget):
+        def __init__(self, parent=None):
+            super().__init__(parent)
+            self.setFixedSize(20, 20)
+        def set_status(self, status):
+            pass
 
 # Configuration
 CONFIG_FILE = 'wifi_radar_nav_config.json'
 DB_FILE = 'wifi_nav_enhanced.db'
-
-# Enhanced UI Constants
+# Enhanced UI Constants  
 RADAR_SIZE = 450
 MAX_RADIUS = 180
 RING_SPACING = 30
@@ -532,8 +549,8 @@ class WiFiScanner(QThread):
             
             time.sleep(interval)
 
-class RadarCanvas(QWidget):
-    """Enhanced radar canvas with modern visualization"""
+class EnhancedRadarCanvas(EnhancedWidget):
+    """Enhanced radar canvas with modern visualization and animations"""
     ap_selected = pyqtSignal(object)
     
     def __init__(self, parent):
@@ -542,6 +559,14 @@ class RadarCanvas(QWidget):
         self.dot_positions = []
         self._selected_index = -1
         self.access_points = []
+        self._zoom_level = 1.0
+        self._pan_offset = QPoint(0, 0)
+        self._is_panning = False
+        self._last_pan_point = QPoint()
+        
+        # Animation properties
+        self.sweep_angle = 0.0
+        self.pulse_radius = 0.0
         
         # UI settings
         self.show_vulnerable_only = False
@@ -553,6 +578,196 @@ class RadarCanvas(QWidget):
         
         self._setup_graphics()
         self._apply_theme()
+        self._setup_animations()
+        
+        # Enable mouse tracking for enhanced interactions
+        self.setMouseTracking(True)
+        
+    def _setup_animations(self):
+        """Setup radar animations"""
+        if ANIMATIONS_AVAILABLE:
+            # Sweep animation
+            self.sweep_timer = QTimer()
+            self.sweep_timer.timeout.connect(self._update_sweep)
+            self.sweep_timer.start(50)  # 20 FPS
+            
+            # Pulse animation for scanning
+            self.pulse_timer = QTimer()
+            self.pulse_timer.timeout.connect(self._update_pulse)
+            
+    def _update_sweep(self):
+        """Update radar sweep animation"""
+        self.sweep_angle += 2.0
+        if self.sweep_angle >= 360.0:
+            self.sweep_angle = 0.0
+        self.update()
+        
+    def _update_pulse(self):
+        """Update pulse animation"""
+        self.pulse_radius += 5.0
+        if self.pulse_radius > MAX_RADIUS:
+            self.pulse_radius = 0.0
+        self.update()
+        
+    def start_scan_animation(self):
+        """Start scanning animations"""
+        if ANIMATIONS_AVAILABLE:
+            self.pulse_timer.start(100)
+            
+    def stop_scan_animation(self):
+        """Stop scanning animations"""
+        if ANIMATIONS_AVAILABLE:
+            self.pulse_timer.stop()
+            self.pulse_radius = 0.0
+            self.update()
+    
+    def wheelEvent(self, event):
+        """Enhanced zoom with mouse wheel"""
+        super().wheelEvent(event)
+        
+        # Zoom in/out
+        delta = event.angleDelta().y()
+        zoom_factor = 1.1 if delta > 0 else 0.9
+        self._zoom_level = max(0.5, min(3.0, self._zoom_level * zoom_factor))
+        
+        # Smooth zoom animation
+        if ANIMATIONS_AVAILABLE:
+            zoom_anim = animation_manager.create_scale_animation(
+                self, duration=150, start_scale=1.0, end_scale=self._zoom_level
+            )
+            zoom_anim.start()
+        
+        self.update()
+        
+    def mousePressEvent(self, event):
+        """Enhanced mouse press with animations"""
+        super().mousePressEvent(event)
+        
+        if event.button() == Qt.LeftButton:
+            # Check for AP selection
+            selected_ap = self._find_ap_at_position(event.pos())
+            if selected_ap:
+                self.ap_selected.emit(selected_ap)
+                
+                # Animate selection
+                if ANIMATIONS_AVAILABLE:
+                    # Create a selection pulse
+                    selection_anim = animation_manager.create_pulse_animation(self, 500)
+                    selection_anim.start()
+            else:
+                # Start panning
+                self._is_panning = True
+                self._last_pan_point = event.pos()
+                self.setCursor(Qt.ClosedHandCursor)
+        
+        elif event.button() == Qt.RightButton:
+            # Right-click context menu
+            self._show_context_menu(event.pos())
+    
+    def mouseMoveEvent(self, event):
+        """Enhanced mouse move with panning"""
+        super().mouseMoveEvent(event)
+        
+        if self._is_panning:
+            # Pan the view
+            delta = event.pos() - self._last_pan_point
+            self._pan_offset += delta
+            self._last_pan_point = event.pos()
+            self.update()
+        else:
+            # Hover effects
+            ap = self._find_ap_at_position(event.pos())
+            if ap:
+                self.setCursor(Qt.PointingHandCursor)
+                self.setToolTip(f"{ap.ssid}\nSignal: {ap.signal_dbm} dBm\nSecurity: {ap.security}")
+            else:
+                self.setCursor(Qt.ArrowCursor)
+                self.setToolTip("")
+    
+    def mouseReleaseEvent(self, event):
+        """Enhanced mouse release"""
+        super().mouseReleaseEvent(event)
+        
+        if event.button() == Qt.LeftButton and self._is_panning:
+            self._is_panning = False
+            self.setCursor(Qt.ArrowCursor)
+    
+    def mouseDoubleClickEvent(self, event):
+        """Double-click to reset view"""
+        super().mouseDoubleClickEvent(event)
+        
+        # Reset zoom and pan with animation
+        if ANIMATIONS_AVAILABLE:
+            # Animate zoom reset
+            zoom_anim = animation_manager.create_scale_animation(
+                self, duration=300, start_scale=self._zoom_level, end_scale=1.0
+            )
+            zoom_anim.start()
+            
+            # Animate pan reset
+            if self._pan_offset != QPoint(0, 0):
+                pan_anim = QPropertyAnimation(self, b"pan_offset")
+                pan_anim.setDuration(300)
+                pan_anim.setStartValue(self._pan_offset)
+                pan_anim.setEndValue(QPoint(0, 0))
+                pan_anim.setEasingCurve(QEasingCurve.OutQuart)
+                
+                def update_pan(offset):
+                    self._pan_offset = offset
+                    self.update()
+                
+                pan_anim.valueChanged.connect(update_pan)
+                pan_anim.start()
+        
+        self._zoom_level = 1.0
+        self._pan_offset = QPoint(0, 0)
+        self.update()
+    
+    def _show_context_menu(self, position):
+        """Show context menu at position"""
+        from PyQt5.QtWidgets import QMenu
+        
+        menu = QMenu(self)
+        menu.setStyleSheet("""
+            QMenu {
+                background-color: #1E1E1E;
+                color: #00FF00;
+                border: 2px solid #333;
+                font-family: 'JetBrains Mono', monospace;
+            }
+            QMenu::item:selected {
+                background-color: #00FF00;
+                color: #000000;
+            }
+        """)
+        
+        # Add menu actions
+        reset_view = menu.addAction("Reset View")
+        menu.addSeparator()
+        toggle_threats = menu.addAction("Toggle Threat Colors")
+        toggle_vulnerable = menu.addAction("Show Vulnerable Only")
+        
+        # Connect actions
+        reset_view.triggered.connect(self.mouseDoubleClickEvent)
+        toggle_threats.triggered.connect(lambda: self.set_show_threat_colors(not self.show_threat_colors))
+        toggle_vulnerable.triggered.connect(lambda: self.set_show_vulnerable_only(not self.show_vulnerable_only))
+        
+        menu.exec_(self.mapToGlobal(position))
+    
+    def _find_ap_at_position(self, pos):
+        """Find access point at given position"""
+        click_x = pos.x()
+        click_y = pos.y()
+        
+        for pos_data in self.dot_positions:
+            ap_x = pos_data['x'] + self._pan_offset.x()
+            ap_y = pos_data['y'] + self._pan_offset.y()
+            
+            distance = math.sqrt((click_x - ap_x)**2 + (click_y - ap_y)**2)
+            if distance <= DOT_SIZE + 5:  # 5 pixel tolerance
+                return pos_data['ap']
+        
+        return None
 
     def _setup_graphics(self):
         """Initialize graphics elements"""
@@ -636,13 +851,160 @@ class RadarCanvas(QWidget):
         self.update()
 
     def paintEvent(self, event):
-        """Main paint event"""
+        """Enhanced paint event with animations"""
         qp = QPainter(self)
         qp.setRenderHint(QPainter.Antialiasing)
+        
+        # Apply zoom and pan transformations
+        qp.scale(self._zoom_level, self._zoom_level)
+        qp.translate(self._pan_offset.x() / self._zoom_level, self._pan_offset.y() / self._zoom_level)
 
-        self._draw_grid_lines(qp)
-        self._draw_access_points(qp)
+        self._draw_animated_grid(qp)
+        self._draw_sweep_animation(qp)
+        self._draw_pulse_animation(qp)
+        self._draw_access_points_animated(qp)
         self._draw_statistics(qp)
+
+    def _draw_animated_grid(self, qp):
+        """Draw radar grid with subtle animations"""
+        qp.setPen(self._grid_pen)
+        
+        # Draw concentric circles with animated opacity
+        for i, r in enumerate(range(RING_SPACING, MAX_RADIUS + 1, RING_SPACING)):
+            # Animate grid opacity based on sweep
+            opacity = 0.3 + 0.2 * math.sin(math.radians(self.sweep_angle + i * 30))
+            pen = QPen(QColor(0, int(120 * opacity), 0), 1, Qt.DotLine)
+            qp.setPen(pen)
+            
+            qp.drawEllipse(
+                self._center_x - r, self._center_y - r, 
+                2 * r, 2 * r
+            )
+        
+        # Draw crosshairs
+        qp.setPen(self._light_green_pen)
+        qp.drawLine(
+            self._center_x - MAX_RADIUS, self._center_y, 
+            self._center_x + MAX_RADIUS, self._center_y
+        )
+        qp.drawLine(
+            self._center_x, self._center_y - MAX_RADIUS, 
+            self._center_x, self._center_y + MAX_RADIUS
+        )
+        
+        # Draw range labels
+        qp.setPen(self._green_pen)
+        qp.setFont(self._small_font)
+        for r in range(RING_SPACING, MAX_RADIUS + 1, RING_SPACING):
+            distance = int(r * self.parent.max_distance / MAX_RADIUS)
+            qp.drawText(self._center_x + r + 5, self._center_y - 5, f"{distance}m")
+
+    def _draw_sweep_animation(self, qp):
+        """Draw animated radar sweep"""
+        if self.pulse_timer.isActive():  # Only show sweep during scanning
+            sweep_pen = QPen(QColor(0, 255, 0, 100), 2)
+            qp.setPen(sweep_pen)
+            
+            # Draw sweep line
+            sweep_rad = math.radians(self.sweep_angle)
+            end_x = self._center_x + MAX_RADIUS * math.cos(sweep_rad)
+            end_y = self._center_y + MAX_RADIUS * math.sin(sweep_rad)
+            
+            qp.drawLine(self._center_x, self._center_y, int(end_x), int(end_y))
+            
+            # Draw sweep fade trail
+            for i in range(1, 20):
+                trail_angle = self.sweep_angle - i * 5
+                trail_alpha = max(0, 100 - i * 5)
+                trail_pen = QPen(QColor(0, 255, 0, trail_alpha), 1)
+                qp.setPen(trail_pen)
+                
+                trail_rad = math.radians(trail_angle)
+                trail_end_x = self._center_x + MAX_RADIUS * math.cos(trail_rad)
+                trail_end_y = self._center_y + MAX_RADIUS * math.sin(trail_rad)
+                
+                qp.drawLine(self._center_x, self._center_y, int(trail_end_x), int(trail_end_y))
+
+    def _draw_pulse_animation(self, qp):
+        """Draw pulse animation during scanning"""
+        if self.pulse_radius > 0:
+            pulse_pen = QPen(QColor(0, 255, 0, 150), 3)
+            qp.setPen(pulse_pen)
+            qp.setBrush(QBrush())
+            
+            qp.drawEllipse(
+                self._center_x - self.pulse_radius, 
+                self._center_y - self.pulse_radius,
+                2 * self.pulse_radius, 
+                2 * self.pulse_radius
+            )
+
+    def _draw_access_points_animated(self, qp):
+        """Draw access points with enhanced animations"""
+        for pos_data in self.dot_positions:
+            x, y = pos_data['x'], pos_data['y']
+            ap = pos_data['ap']
+            
+            # Determine color
+            if self.show_threat_colors and ap.threat_level in self.threat_colors:
+                color = self.threat_colors[ap.threat_level]
+            else:
+                signal_ratio = max(0, min(1, (ap.signal_dbm + 100) / 60))
+                color = QColor(
+                    int(255 * (1 - signal_ratio)),
+                    int(255 * signal_ratio),
+                    0
+                )
+            
+            # Enhanced drawing with animations
+            if ap.is_vulnerable:
+                # Pulsing effect for vulnerable APs
+                pulse_factor = 1.0 + 0.3 * math.sin(math.radians(self.sweep_angle * 3))
+                dot_size = int(DOT_SIZE * pulse_factor)
+                
+                # Draw warning ring
+                warning_pen = QPen(Qt.red, 2)
+                qp.setPen(warning_pen)
+                qp.setBrush(QBrush())
+                qp.drawEllipse(x - dot_size - 5, y - dot_size - 5, 
+                             (dot_size + 5) * 2, (dot_size + 5) * 2)
+            else:
+                dot_size = DOT_SIZE
+            
+            # Draw main dot with glow effect
+            qp.setPen(QPen(color, 2))
+            qp.setBrush(QBrush(color))
+            qp.drawEllipse(x - dot_size, y - dot_size, dot_size * 2, dot_size * 2)
+            
+            # Draw inner glow
+            inner_color = QColor(color)
+            inner_color.setAlpha(150)
+            qp.setBrush(QBrush(inner_color))
+            qp.drawEllipse(x - dot_size//2, y - dot_size//2, dot_size, dot_size)
+            
+            # Draw SSID label with improved positioning
+            if ap.ssid and len(ap.ssid.strip()) > 0:
+                qp.setPen(self._white_pen)
+                qp.setFont(self._small_font)
+                
+                label_x = x + dot_size + 8
+                label_y = y + 4
+                
+                # Draw background for text
+                text_rect = qp.fontMetrics().boundingRect(ap.ssid[:15])
+                bg_rect = text_rect.adjusted(-2, -1, 2, 1)
+                bg_rect.moveTopLeft(QPoint(label_x - 2, label_y - text_rect.height()))
+                
+                qp.fillRect(bg_rect, QColor(0, 0, 0, 180))
+                qp.drawText(label_x, label_y, ap.ssid[:15])
+            
+            # Selection highlight
+            if hasattr(self, '_selected_ap') and self._selected_ap == ap:
+                selection_pen = QPen(Qt.yellow, 3)
+                qp.setPen(selection_pen)
+                qp.setBrush(QBrush())
+                qp.drawEllipse(x - dot_size - 8, y - dot_size - 8, 
+                             (dot_size + 8) * 2, (dot_size + 8) * 2)
 
     def _draw_grid_lines(self, qp):
         """Draw radar grid"""
@@ -1583,27 +1945,34 @@ class NavigationRadarWindow(QMainWindow):
         toolbar.addWidget(self.progress_bar)
 
     def _setup_ui(self):
-        """Setup the main user interface"""
+        """Setup the main user interface with enhanced components"""
         # Central widget
         central = QWidget()
         self.setCentralWidget(central)
+        
+        # Add status indicator
+        self.status_indicator = StatusIndicator(self)
+        self.status_indicator.move(10, 30)
+        self.status_indicator.set_status("connected")
         
         # Main layout
         main_layout = QHBoxLayout(central)
         main_layout.setContentsMargins(5, 5, 5, 5)
         main_layout.setSpacing(10)
         
-        # Left panel - Radar
+        # Left panel - Enhanced Radar
         radar_group = QGroupBox("WiFi Penetration Testing Radar")
         radar_layout = QVBoxLayout(radar_group)
         
-        self.radar = RadarCanvas(self)
+        # Use enhanced radar canvas with animations
+        self.radar = EnhancedRadarCanvas(self)
         self.radar.ap_selected.connect(self.on_ap_selected)
         radar_layout.addWidget(self.radar, 0, Qt.AlignCenter)
         
-        # Quick controls under radar
+        # Quick controls under radar with enhanced styling
         quick_controls = QHBoxLayout()
         
+        # Enhanced distance slider with animations
         self.distance_slider = QSlider(Qt.Horizontal)
         self.distance_slider.setMinimum(50)
         self.distance_slider.setMaximum(500)
@@ -1719,17 +2088,65 @@ class NavigationRadarWindow(QMainWindow):
         pass
 
     def start_scanning(self):
-        """Start WiFi scanning"""
+        """Start WiFi scanning with enhanced animations"""
         self.scanner.set_interface(self.interface)
         self.scanner.set_scan_interval(self.scan_interval)
         self.scanner.start_scanning()
-        self.status_bar.showMessage(f"Scanning on {self.interface}...")
+        
+        # Start radar animations
+        self.radar.start_scan_animation()
+        
+        # Update status indicator with animation
+        if hasattr(self, 'status_indicator'):
+            self.status_indicator.set_status("scanning")
+        
+        # Animate status message
+        self.status_bar.showMessage(f"🔍 Scanning on {self.interface}...")
+        
+        # Add scanning progress animation
+        if ANIMATIONS_AVAILABLE:
+            # Create a pulsing effect on the radar group
+            radar_group = self.radar.parent()
+            if radar_group:
+                pulse_anim = animation_manager.create_pulse_animation(radar_group, 1500)
+                pulse_anim.start()
+
+    def stop_scanning(self):
+        """Stop WiFi scanning with animations"""
+        self.scanner.stop_scanning()
+        
+        # Stop radar animations
+        self.radar.stop_scan_animation()
+        
+        # Update status indicator
+        if hasattr(self, 'status_indicator'):
+            self.status_indicator.set_status("idle")
+        
+        self.status_bar.showMessage("Scanning stopped")
 
     def update_access_points(self, aps: List[AccessPoint]):
-        """Update access points display"""
+        """Update access points display with smooth transitions"""
+        # Animate the update
+        if ANIMATIONS_AVAILABLE and hasattr(self.radar, 'access_points'):
+            old_count = len(self.radar.access_points)
+            new_count = len(aps)
+            
+            if new_count > old_count:
+                # New APs found - create notification animation
+                fade_anim = animation_manager.create_fade_animation(
+                    self.radar, duration=200, start_opacity=0.7, end_opacity=1.0
+                )
+                fade_anim.start()
+        
         self.radar.update_access_points(aps)
         self.update_targets_tree(aps)
-        self.status_bar.showMessage(f"Found {len(aps)} access points - {sum(1 for ap in aps if ap.is_vulnerable)} vulnerable")
+        
+        # Enhanced status message with emojis and colors
+        vulnerable_count = sum(1 for ap in aps if ap.is_vulnerable)
+        if vulnerable_count > 0:
+            self.status_bar.showMessage(f"🎯 Found {len(aps)} APs - ⚠️ {vulnerable_count} vulnerable")
+        else:
+            self.status_bar.showMessage(f"✅ Found {len(aps)} access points - all secure")
 
     def update_targets_tree(self, aps: List[AccessPoint]):
         """Update the targets tree widget"""
@@ -1868,13 +2285,29 @@ Channel Width: Auto-detected
                 QTimer.singleShot(1000, lambda: self.progress_bar.setVisible(False))
 
     def set_view_mode(self, mode: str):
-        """Set the view mode (COMPACT, NORMAL, FULLSCREEN)"""
+        """Set the view mode with smooth animations (COMPACT, NORMAL, FULLSCREEN)"""
         self.current_view_mode = mode
+        
+        # Start transition animation
+        if ANIMATIONS_AVAILABLE:
+            # Fade out current view
+            fade_out = animation_manager.create_fade_animation(
+                self, duration=200, start_opacity=1.0, end_opacity=0.8
+            )
+            fade_out.start()
         
         if mode == 'FULLSCREEN':
             if not self.isFullScreen():
-                self.showFullScreen()
-            self.status_bar.showMessage(f"View Mode: Fullscreen")
+                if ANIMATIONS_AVAILABLE:
+                    # Animate to fullscreen
+                    transition_anim = animation_manager.animate_view_mode_transition(
+                        self, self.screen().size(), duration=500
+                    )
+                    transition_anim[0].finished.connect(lambda: self.showFullScreen())
+                    transition_anim[0].start()
+                else:
+                    self.showFullScreen()
+            self.status_bar.showMessage("🖥️ View Mode: Fullscreen")
             self.mode_label.setText("Mode: FULLSCREEN")
         else:
             if self.isFullScreen():
@@ -1882,16 +2315,36 @@ Channel Width: Auto-detected
             
             if mode in VIEW_MODES:
                 width, height = VIEW_MODES[mode]
-                self.resize(width, height)
                 
-                # Adjust UI elements based on view mode
+                if ANIMATIONS_AVAILABLE:
+                    # Animate resize
+                    size_anim = animation_manager.animate_view_mode_transition(
+                        self, QSize(width, height), duration=400
+                    )
+                    size_anim[0].start()
+                else:
+                    self.resize(width, height)
+                
+                # Adjust UI elements based on view mode with animations
                 if mode == 'COMPACT':
                     self._setup_compact_layout()
+                    self.status_bar.showMessage(f"📱 View Mode: {mode} ({width}x{height})")
                 else:  # NORMAL
                     self._setup_normal_layout()
+                    self.status_bar.showMessage(f"🖥️ View Mode: {mode} ({width}x{height})")
                 
-                self.status_bar.showMessage(f"View Mode: {mode} ({width}x{height})")
                 self.mode_label.setText(f"Mode: {mode}")
+        
+        # Fade back in
+        if ANIMATIONS_AVAILABLE:
+            QTimer.singleShot(300, lambda: self._fade_in_after_transition())
+    
+    def _fade_in_after_transition(self):
+        """Fade in after view mode transition"""
+        fade_in = animation_manager.create_fade_animation(
+            self, duration=300, start_opacity=0.8, end_opacity=1.0
+        )
+        fade_in.start()
 
     def _setup_compact_layout(self):
         """Setup compact layout for small screens"""
