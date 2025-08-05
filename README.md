@@ -482,7 +482,7 @@ sudo systemctl start NetworkManager
 2. **Polar Mode**: Traditional radar sweep with distance rings and angles  
 3. **Heatmap Mode**: Signal strength and threat visualization with gradients
 
-*Note: Actual screenshots showing these interfaces in action are available in the project wiki and documentation.*
+*Note: These are ASCII art representations of the actual interfaces. Actual screenshots showing these interfaces in action are available in the project wiki and documentation.*
 
 ## Radar Visualization Modes
 

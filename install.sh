@@ -77,13 +77,17 @@ echo
 print_status "Updating package manager..."
 case $PACKAGE_MANAGER in
     apt)
-        sudo apt update && sudo apt upgrade -y
+        sudo apt update
+        print_status "Skipping system upgrade to avoid conflicts (you can upgrade manually later)"
+        # sudo apt upgrade -y  # Commented out to avoid conflicts
         ;;
     pacman)
-        sudo pacman -Syu --noconfirm
+        sudo pacman -Sy --noconfirm
+        print_status "Skipping full system upgrade to avoid conflicts"
         ;;
     dnf)
-        sudo dnf update -y
+        sudo dnf check-update || true  # check-update returns non-zero when updates available
+        print_status "Skipping system upgrade to avoid conflicts"
         ;;
 esac
 print_success "Package manager updated"
@@ -92,18 +96,23 @@ print_success "Package manager updated"
 print_status "Installing system dependencies..."
 case $PACKAGE_MANAGER in
     apt)
-        sudo apt install -y python3 python3-pip python3-pyqt5 python3-pyqt5-dev \
+        if ! sudo apt install -y python3 python3-pip python3-pyqt5 python3-pyqt5-dev \
                            wireless-tools iw build-essential python3-dev \
-                           fonts-jetbrains-mono git
+                           fonts-jetbrains-mono git 2>/dev/null; then
+            print_warning "Some packages failed to install, trying essential packages only..."
+            sudo apt install -y python3 python3-pip python3-pyqt5 wireless-tools iw git
+        fi
         ;;
     pacman)
         sudo pacman -S --noconfirm python python-pip python-pyqt5 wireless_tools \
-                                   iw base-devel git ttf-jetbrains-mono
+                                   iw base-devel git ttf-jetbrains-mono || \
+        sudo pacman -S --noconfirm python python-pip python-pyqt5 wireless_tools iw git
         ;;
     dnf)
         sudo dnf install -y python3 python3-pip python3-qt5 wireless-tools \
                            iw @development-tools python3-devel git \
-                           jetbrains-mono-fonts
+                           jetbrains-mono-fonts || \
+        sudo dnf install -y python3 python3-pip python3-qt5 wireless-tools iw git
         ;;
 esac
 print_success "System dependencies installed"
