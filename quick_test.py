@@ -42,25 +42,25 @@ except Exception as e:
 try:
     cm = config_manager.ConfigManager()
     print(f"✓ Config loaded: {len(cm.security_profiles)} security profiles")
-    
+
     vs = vendor_service.VendorService()
     print(f"✓ Vendor service ready: {len(vs.oui_database)} vendors")
-    
+
     se = security_engine.SecurityEngine()
     print("✓ Security engine ready")
-    
+
     de = distance_engine.DistanceEngine()
     print("✓ Distance engine ready")
-    
+
     scanner = WiFiScanner()
     print("✓ WiFi scanner ready")
-    
+
     print("\n🎉 SUCCESS! All engines loaded and working!")
     print("✓ No more hardcoding")
     print("✓ Configuration-driven architecture")
     print("✓ Modular engine system")
     print("✓ Professional-grade logic")
-    
+
 except Exception as e:
     print(f"✗ System test failed: {e}")
     exit(1)

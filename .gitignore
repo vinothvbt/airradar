@@ -1,5 +1,8 @@
-# Python cache files
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
 *.pyc
 *.pyo
 *.pyd
@@ -16,11 +19,29 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
-# Virtual environments
+# PyQt
+*.qrc
+*.ui
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
 .env
 .venv
 env/
@@ -29,32 +50,26 @@ ENV/
 env.bak/
 venv.bak/
 
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
 # Logs
 *.log
 logs/
+
+# Configuration (if sensitive)
+config.json
+oui_database.json
+wifi_radar_nav_config.json
+
+# Testing
+.coverage
+.pytest_cache/
+.tox/
+test_output/
+
+# Application specific
+wifi_*.db
+*.json
 
 # Temporary files
 *.tmp
 *.temp
 /tmp/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Application specific
-wifi_*.db
-*.json
-oui_database.json
-config.json
-wifi_radar_nav_config.json
-
-# Test files
-test_output/
