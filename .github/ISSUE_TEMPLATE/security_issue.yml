@@ -1,0 +1,97 @@
+name: Security Issue
+description: Report a security vulnerability (private)
+title: "[SECURITY] "
+labels: ["security", "high-priority"]
+assignees:
+  - vinothvbt
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **SECURITY NOTICE** ⚠️
+        
+        If you believe you have found a critical security vulnerability, please DO NOT file a public issue.
+        Instead, please contact the maintainer directly at the project's private security contact.
+        
+        For non-critical security improvements or general security questions, you may use this template.
+
+  - type: textarea
+    id: security-issue
+    attributes:
+      label: Security Issue Description
+      description: Describe the security concern (avoid posting exploit details publicly)
+      placeholder: Provide a general description of the security issue without revealing exploit details
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity Level
+      description: How severe is this security issue?
+      options:
+        - Critical - Remote code execution, privilege escalation
+        - High - Data exposure, authentication bypass
+        - Medium - Information disclosure, DoS potential
+        - Low - Security hardening, best practices
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component-affected
+    attributes:
+      label: Component Affected
+      description: Which component has the security issue?
+      options:
+        - WiFi Scanning Engine
+        - Network Interface Handling
+        - Data Processing & Storage
+        - User Interface
+        - Configuration System
+        - Dependencies
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential Impact
+      description: What could happen if this issue is exploited?
+      placeholder: Describe the potential impact without providing attack details
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: In what environment was this discovered?
+      value: |
+        - OS: [e.g. Ubuntu 22.04]
+        - Python Version: [e.g. 3.10.6]
+        - PyQt5 Version: [e.g. 5.15.0]
+        - Network Environment: [e.g. Testing lab, isolated environment]
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: responsible-disclosure
+    attributes:
+      label: Responsible Disclosure
+      description: Please confirm your commitment to responsible disclosure
+      options:
+        - label: I will not publicly disclose details until a fix is available
+          required: true
+        - label: I will coordinate with maintainers on disclosure timeline
+          required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this security report, you agree to follow our community guidelines
+      options:
+        - label: I agree to follow this project's code of conduct
+          required: true

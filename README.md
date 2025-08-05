@@ -388,7 +388,32 @@ This tool is designed for **educational purposes** and **authorized security tes
 
 ## Contributing
 
-Contributions are welcome! Please ensure any modifications maintain the professional theming and security focus of the project.
+Contributions are welcome! This project follows a formal code review process to ensure quality and security.
+
+### Code Review Process
+
+- **Official Reviewer**: All major feature and improvement pull requests are reviewed by @github/copilot
+- **Review Standards**: We maintain high standards for code quality, security, and documentation
+- **Community Involvement**: Community feedback and contributions are encouraged and valued
+
+### Getting Started
+
+1. Read our [Contributing Guidelines](CONTRIBUTING.md)
+2. Fork the repository and create a feature branch
+3. Make your changes following our coding standards
+4. Submit a pull request using the provided template
+5. Participate in the code review process
+
+### Review Standards
+
+All pull requests must meet the following criteria:
+- ✅ Code quality and style consistency
+- ✅ Security considerations addressed
+- ✅ Adequate documentation and comments
+- ✅ Appropriate test coverage
+- ✅ No breaking changes without justification
+
+Please ensure any modifications maintain the professional theming and security focus of the project.
 
 ---
 
