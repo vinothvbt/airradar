@@ -71,3 +71,10 @@ wifi_*.db
 *.tmp
 *.temp
 /tmp/
+
+# Code quality reports
+bandit-report.json
+safety-report.json
+flake8-report.txt
+coverage.xml
+.coverage
