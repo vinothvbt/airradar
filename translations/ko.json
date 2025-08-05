@@ -1,0 +1,140 @@
+{
+  "main_window": {
+    "title": "[KO] WiFi Security Radar Suite",
+    "scan_button": "[KO] Start Scan",
+    "stop_button": "[KO] Stop Scan",
+    "refresh_button": "[KO] Refresh",
+    "export_button": "[KO] Export Data",
+    "settings_button": "[KO] Settings",
+    "help_button": "[KO] Help",
+    "about_button": "[KO] About",
+    "exit_button": "[KO] Exit"
+  },
+  "menu": {
+    "file": "[KO] File",
+    "edit": "[KO] Edit",
+    "view": "[KO] View",
+    "tools": "[KO] Tools",
+    "help": "[KO] Help",
+    "new_scan": "[KO] New Scan",
+    "save_results": "[KO] Save Results",
+    "export_data": "[KO] Export Data",
+    "preferences": "[KO] Preferences",
+    "accessibility": "[KO] Accessibility",
+    "language": "[KO] Language"
+  },
+  "toolbar": {
+    "scan": "[KO] Scan Networks",
+    "stop": "[KO] Stop Scanning",
+    "refresh": "[KO] Refresh Display",
+    "export": "[KO] Export Results",
+    "graphs": "[KO] Show Graphs",
+    "zoom_in": "[KO] Zoom In",
+    "zoom_out": "[KO] Zoom Out",
+    "fullscreen": "[KO] Fullscreen"
+  },
+  "network_info": {
+    "ssid": "[KO] Network Name (SSID)",
+    "bssid": "[KO] MAC Address (BSSID)",
+    "security": "[KO] Security Type",
+    "signal": "[KO] Signal Strength",
+    "channel": "[KO] Channel",
+    "frequency": "[KO] Frequency",
+    "vendor": "[KO] Vendor",
+    "last_seen": "[KO] Last Seen",
+    "distance": "[KO] Estimated Distance",
+    "threat_level": "[KO] Threat Level"
+  },
+  "security_types": {
+    "open": "[KO] Open Network",
+    "wep": "[KO] WEP Encryption",
+    "wpa": "[KO] WPA Encryption",
+    "wpa2": "[KO] WPA2 Encryption",
+    "wpa3": "[KO] WPA3 Encryption",
+    "unknown": "[KO] Unknown Security"
+  },
+  "threat_levels": {
+    "critical": "[KO] Critical Risk",
+    "high": "[KO] High Risk",
+    "medium": "[KO] Medium Risk",
+    "low": "[KO] Low Risk",
+    "minimal": "[KO] Minimal Risk"
+  },
+  "graphs": {
+    "signal_strength": "[KO] Signal Strength",
+    "network_activity": "[KO] Network Activity",
+    "security_trends": "[KO] Security Trends",
+    "real_time_monitoring": "[KO] Real-time Monitoring Dashboard",
+    "auto_update": "[KO] Auto Update",
+    "update_interval": "[KO] Update Interval (seconds)",
+    "clear_data": "[KO] Clear Data"
+  },
+  "export": {
+    "title": "[KO] Export WiFi Data",
+    "format": "[KO] Export Format",
+    "csv_format": "[KO] CSV (Comma Separated Values)",
+    "json_format": "[KO] JSON (JavaScript Object Notation)",
+    "html_format": "[KO] HTML Report (Web Page)",
+    "include_metadata": "[KO] Include scan metadata",
+    "pretty_format": "[KO] Pretty formatting",
+    "output_file": "[KO] Output File",
+    "browse": "[KO] Browse...",
+    "export_button": "[KO] Export Data",
+    "cancel": "[KO] Cancel",
+    "success": "[KO] Data successfully exported",
+    "failed": "[KO] Export failed"
+  },
+  "accessibility": {
+    "title": "[KO] Accessibility Settings",
+    "visual_accessibility": "[KO] Visual Accessibility",
+    "high_contrast": "[KO] Enable High Contrast Mode",
+    "enhanced_focus": "[KO] Enhanced Focus Indicators",
+    "font_size": "[KO] Font Size",
+    "navigation": "[KO] Navigation",
+    "keyboard_navigation": "[KO] Enhanced Keyboard Navigation",
+    "screen_reader": "[KO] Screen Reader Support",
+    "themes": "[KO] Accessibility Themes",
+    "theme": "[KO] Theme",
+    "apply": "[KO] Apply Settings",
+    "reset": "[KO] Reset to Defaults",
+    "close": "[KO] Close"
+  },
+  "scanner": {
+    "status_scanning": "[KO] Scanning for networks...",
+    "status_stopped": "[KO] Scan stopped",
+    "status_complete": "[KO] Scan complete",
+    "networks_found": "[KO] networks found",
+    "no_networks": "[KO] No networks detected",
+    "scan_error": "[KO] Scan error occurred",
+    "interface_error": "[KO] No wireless interface detected",
+    "permission_error": "[KO] Permission denied - run as root"
+  },
+  "dialogs": {
+    "error": "[KO] Error",
+    "warning": "[KO] Warning",
+    "information": "[KO] Information",
+    "confirmation": "[KO] Confirm",
+    "yes": "[KO] Yes",
+    "no": "[KO] No",
+    "ok": "[KO] OK",
+    "cancel": "[KO] Cancel",
+    "apply": "[KO] Apply",
+    "close": "[KO] Close"
+  },
+  "status": {
+    "ready": "[KO] Ready",
+    "scanning": "[KO] Scanning...",
+    "processing": "[KO] Processing...",
+    "exporting": "[KO] Exporting...",
+    "error": "[KO] Error",
+    "connected": "[KO] Connected",
+    "disconnected": "[KO] Disconnected"
+  },
+  "help": {
+    "keyboard_shortcuts": "[KO] Keyboard Shortcuts",
+    "about_title": "[KO] About WiFi Security Radar",
+    "about_text": "[KO] Professional WiFi Security Analysis Tool v5.0",
+    "copyright": "[KO] © 2025 WiFi Security Tools",
+    "license": "[KO] For authorized security testing only"
+  }
+}

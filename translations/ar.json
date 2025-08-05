@@ -1,0 +1,140 @@
+{
+  "main_window": {
+    "title": "[AR] WiFi Security Radar Suite",
+    "scan_button": "[AR] Start Scan",
+    "stop_button": "[AR] Stop Scan",
+    "refresh_button": "[AR] Refresh",
+    "export_button": "[AR] Export Data",
+    "settings_button": "[AR] Settings",
+    "help_button": "[AR] Help",
+    "about_button": "[AR] About",
+    "exit_button": "[AR] Exit"
+  },
+  "menu": {
+    "file": "[AR] File",
+    "edit": "[AR] Edit",
+    "view": "[AR] View",
+    "tools": "[AR] Tools",
+    "help": "[AR] Help",
+    "new_scan": "[AR] New Scan",
+    "save_results": "[AR] Save Results",
+    "export_data": "[AR] Export Data",
+    "preferences": "[AR] Preferences",
+    "accessibility": "[AR] Accessibility",
+    "language": "[AR] Language"
+  },
+  "toolbar": {
+    "scan": "[AR] Scan Networks",
+    "stop": "[AR] Stop Scanning",
+    "refresh": "[AR] Refresh Display",
+    "export": "[AR] Export Results",
+    "graphs": "[AR] Show Graphs",
+    "zoom_in": "[AR] Zoom In",
+    "zoom_out": "[AR] Zoom Out",
+    "fullscreen": "[AR] Fullscreen"
+  },
+  "network_info": {
+    "ssid": "[AR] Network Name (SSID)",
+    "bssid": "[AR] MAC Address (BSSID)",
+    "security": "[AR] Security Type",
+    "signal": "[AR] Signal Strength",
+    "channel": "[AR] Channel",
+    "frequency": "[AR] Frequency",
+    "vendor": "[AR] Vendor",
+    "last_seen": "[AR] Last Seen",
+    "distance": "[AR] Estimated Distance",
+    "threat_level": "[AR] Threat Level"
+  },
+  "security_types": {
+    "open": "[AR] Open Network",
+    "wep": "[AR] WEP Encryption",
+    "wpa": "[AR] WPA Encryption",
+    "wpa2": "[AR] WPA2 Encryption",
+    "wpa3": "[AR] WPA3 Encryption",
+    "unknown": "[AR] Unknown Security"
+  },
+  "threat_levels": {
+    "critical": "[AR] Critical Risk",
+    "high": "[AR] High Risk",
+    "medium": "[AR] Medium Risk",
+    "low": "[AR] Low Risk",
+    "minimal": "[AR] Minimal Risk"
+  },
+  "graphs": {
+    "signal_strength": "[AR] Signal Strength",
+    "network_activity": "[AR] Network Activity",
+    "security_trends": "[AR] Security Trends",
+    "real_time_monitoring": "[AR] Real-time Monitoring Dashboard",
+    "auto_update": "[AR] Auto Update",
+    "update_interval": "[AR] Update Interval (seconds)",
+    "clear_data": "[AR] Clear Data"
+  },
+  "export": {
+    "title": "[AR] Export WiFi Data",
+    "format": "[AR] Export Format",
+    "csv_format": "[AR] CSV (Comma Separated Values)",
+    "json_format": "[AR] JSON (JavaScript Object Notation)",
+    "html_format": "[AR] HTML Report (Web Page)",
+    "include_metadata": "[AR] Include scan metadata",
+    "pretty_format": "[AR] Pretty formatting",
+    "output_file": "[AR] Output File",
+    "browse": "[AR] Browse...",
+    "export_button": "[AR] Export Data",
+    "cancel": "[AR] Cancel",
+    "success": "[AR] Data successfully exported",
+    "failed": "[AR] Export failed"
+  },
+  "accessibility": {
+    "title": "[AR] Accessibility Settings",
+    "visual_accessibility": "[AR] Visual Accessibility",
+    "high_contrast": "[AR] Enable High Contrast Mode",
+    "enhanced_focus": "[AR] Enhanced Focus Indicators",
+    "font_size": "[AR] Font Size",
+    "navigation": "[AR] Navigation",
+    "keyboard_navigation": "[AR] Enhanced Keyboard Navigation",
+    "screen_reader": "[AR] Screen Reader Support",
+    "themes": "[AR] Accessibility Themes",
+    "theme": "[AR] Theme",
+    "apply": "[AR] Apply Settings",
+    "reset": "[AR] Reset to Defaults",
+    "close": "[AR] Close"
+  },
+  "scanner": {
+    "status_scanning": "[AR] Scanning for networks...",
+    "status_stopped": "[AR] Scan stopped",
+    "status_complete": "[AR] Scan complete",
+    "networks_found": "[AR] networks found",
+    "no_networks": "[AR] No networks detected",
+    "scan_error": "[AR] Scan error occurred",
+    "interface_error": "[AR] No wireless interface detected",
+    "permission_error": "[AR] Permission denied - run as root"
+  },
+  "dialogs": {
+    "error": "[AR] Error",
+    "warning": "[AR] Warning",
+    "information": "[AR] Information",
+    "confirmation": "[AR] Confirm",
+    "yes": "[AR] Yes",
+    "no": "[AR] No",
+    "ok": "[AR] OK",
+    "cancel": "[AR] Cancel",
+    "apply": "[AR] Apply",
+    "close": "[AR] Close"
+  },
+  "status": {
+    "ready": "[AR] Ready",
+    "scanning": "[AR] Scanning...",
+    "processing": "[AR] Processing...",
+    "exporting": "[AR] Exporting...",
+    "error": "[AR] Error",
+    "connected": "[AR] Connected",
+    "disconnected": "[AR] Disconnected"
+  },
+  "help": {
+    "keyboard_shortcuts": "[AR] Keyboard Shortcuts",
+    "about_title": "[AR] About WiFi Security Radar",
+    "about_text": "[AR] Professional WiFi Security Analysis Tool v5.0",
+    "copyright": "[AR] © 2025 WiFi Security Tools",
+    "license": "[AR] For authorized security testing only"
+  }
+}

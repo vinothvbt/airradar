@@ -126,6 +126,14 @@ sudo python3 wifi_pentest_radar_modern.py
 - `Ctrl+-`: Zoom Out
 - `Ctrl+Q`: Exit
 
+### Enhanced Features (v5.0)
+- `Ctrl+G`: Toggle Real-time Graphs
+- `Ctrl+E`: Export Data
+- `Ctrl+Alt+A`: Accessibility Settings
+- `F1`: Accessibility Help
+- `Ctrl+Shift+S`: Toggle Screen Reader Mode
+- `Ctrl+Shift+H`: Toggle High Contrast Mode
+
 ### Modern Penetration Testing Radar
 - `Ctrl+1`: Compact Mode (800x500)
 - `Ctrl+2`: Normal Mode (1400x800)
@@ -191,25 +199,36 @@ See `THEMING_AND_VIEWS.md` for detailed theming documentation.
 - Security recommendations based on threat level
 - Copy functionality for easy report sharing
 
-## Modern Features (v4.0)
+## Modern Features (v5.0)
+
+### Enhanced GUI and Usability
+- **Real-time Monitoring Dashboard**: Live graphs for signal strength, network activity, and security trends
+- **Professional Export System**: Generate CSV, JSON, and styled HTML reports
+- **Accessibility Features**: High contrast mode, font scaling (50%-300%), enhanced keyboard navigation
+- **Multi-language Support**: 11 languages with runtime switching (English, Spanish, French, German, etc.)
+- **Advanced Theme System**: 6+ built-in themes with complete customization options
+- **Enhanced Navigation**: Improved menu structure, keyboard shortcuts, and spatial navigation
 
 ### Enhanced Visualization
 - Multiple radar modes (Grid/Polar/Heatmap)
 - Intelligent AP positioning to prevent overlapping
 - Modern animations and smooth transitions
 - Professional color schemes and gradients
+- Real-time data visualization with customizable update intervals
 
 ### Advanced Analysis
 - Enhanced distance calculation algorithms
 - Comprehensive vendor identification
 - Multi-factor vulnerability scoring
 - Detailed attack vector analysis
+- Professional reporting with export capabilities
 
 ### User Experience
 - Modern Material Design interface
 - Copy functionality for all analysis results
 - Professional dialog systems
 - Responsive layout design
+- Comprehensive accessibility support
 
 ## Troubleshooting
 
@@ -277,12 +296,21 @@ sudo systemctl start NetworkManager
 - ✅ Resolved radar visualization crashes in modern interface
 - ✅ Updated main launcher to use modern pentest radar
 
-### Improvements
+### Major GUI and Usability Improvements
+- ✅ **Real-time Graphs**: Signal strength, network activity, and security trend monitoring
+- ✅ **Enhanced Export**: CSV, JSON, and professional HTML reports with styling
+- ✅ **Accessibility Features**: High contrast mode, font scaling, keyboard navigation
+- ✅ **Multi-language Support**: 11 languages with translation framework
+- ✅ **Advanced Theming**: 6+ customizable themes with color/layout controls
+- ✅ **Enhanced Navigation**: Improved menu structure and keyboard shortcuts
+
+### Core Improvements
 - ✅ Enhanced project organization with backup folder
 - ✅ Modern radar with advanced visualization modes
 - ✅ Professional Material Design interface elements
 - ✅ Comprehensive analysis report generation
 - ✅ Copy functionality for all analysis results
+- ✅ Modular feature integration system
 
 ## Legal Notice
 
