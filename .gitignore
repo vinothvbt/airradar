@@ -51,8 +51,6 @@ Thumbs.db
 
 # Application specific
 wifi_*.db
-*.json
-!config.json
 oui_database.json
 wifi_radar_nav_config.json
 
