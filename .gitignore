@@ -54,8 +54,7 @@ venv.bak/
 *.log
 logs/
 
-# Configuration (if sensitive)
-config.json
+# Configuration (specific excludes only - allow config.json for professional implementation)
 oui_database.json
 wifi_radar_nav_config.json
 
@@ -67,7 +66,6 @@ test_output/
 
 # Application specific
 wifi_*.db
-*.json
 
 # Temporary files
 *.tmp
