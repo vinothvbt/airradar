@@ -1,0 +1,6 @@
+# Development dependencies for code quality and review process
+black>=22.0.0
+flake8>=4.0.0
+isort>=5.10.0
+bandit>=1.7.0
+safety>=2.0.0

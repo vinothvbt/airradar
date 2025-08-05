@@ -20,7 +20,17 @@ sudo python3 main_launcher.py
 
 ## Available Tools
 
-### 1. Navigation Enhanced WiFi Radar (wifi_radar_nav_enhanced.py)
+The suite now features a **modular plugin architecture** that enables easy addition and removal of WiFi monitoring tools.
+
+### Plugin-Based Architecture
+- **Automatic Plugin Discovery**: Dynamic detection and loading of plugins
+- **Standardized Interfaces**: Consistent API for all WiFi monitoring tools
+- **Easy Extension**: Add new tools without modifying core code
+- **Hot Loading**: Load/unload plugins at runtime
+
+### Core Plugins
+
+### 1. Navigation Enhanced WiFi Radar Plugin
 - **Modern navigation bar interface** with professional menu system
 - **Multiple view modes**: Compact (800x500), Normal (1400x800), Fullscreen
 - **Comprehensive hacker-style theming** with Matrix green accents
@@ -35,7 +45,7 @@ sudo python3 main_launcher.py
 - Enhanced dialog systems
 - Professional status indicators
 
-### 2. Modern Penetration Testing Radar (wifi_pentest_radar_modern.py)
+### 2. Penetration Testing Radar Plugin
 - **Modern radar display v4.0** with advanced visualization modes
 - **Multiple visualization types**: Grid, Polar, and Heatmap modes
 - **Advanced vulnerability scoring** with comprehensive threat analysis
@@ -55,7 +65,17 @@ sudo python3 main_launcher.py
 
 ```
 wifiMap/
-├── main_launcher.py              # Main application launcher
+├── main_launcher_plugin.py        # Plugin-based launcher (NEW)
+├── main_launcher.py               # Original launcher (preserved)
+├── core/                          # Plugin framework (NEW)
+│   ├── plugin_base.py            # Base classes and interfaces
+│   └── plugin_manager.py         # Plugin discovery and management
+├── plugins/                       # Plugin directory (NEW)
+│   ├── navigation_enhanced.py    # Navigation enhanced plugin
+│   └── penetration_testing.py   # Penetration testing plugin
+├── docs/                          # Documentation (NEW)
+│   ├── PLUGIN_DEVELOPMENT.md    # Plugin development guide
+│   └── MODULAR_ARCHITECTURE.md  # Architecture overview
 ├── wifi_radar_nav_enhanced.py    # Navigation enhanced interface
 ├── wifi_pentest_radar_modern.py  # Modern penetration testing radar v4.0
 ├── requirements.txt              # Python dependencies
@@ -97,12 +117,21 @@ pip install PyQt5
 
 ## Usage
 
-### Method 1: Main Launcher (Recommended)
+### Method 1: Plugin-Based Launcher (Recommended)
+```bash
+sudo python3 main_launcher_plugin.py
+```
+- **New modular architecture** with plugin system
+- Automatic plugin discovery and loading
+- Enhanced interface with plugin details and capabilities
+- Fallback support for direct tool launch
+
+### Method 2: Original Launcher
 ```bash
 sudo python3 main_launcher.py
 ```
 - Choose between Navigation Enhanced or Modern Penetration Testing interface
-- Professional launcher with program selection
+- Professional launcher with program selection (preserved for compatibility)
 
 ### Method 2: Direct Launch
 ```bash
@@ -199,36 +228,44 @@ See `THEMING_AND_VIEWS.md` for detailed theming documentation.
 - Security recommendations based on threat level
 - Copy functionality for easy report sharing
 
-## Modern Features (v5.0)
+### Plugin System
+- **Modular Design**: Easy addition and removal of WiFi monitoring tools
+- **Automatic Discovery**: Dynamic plugin detection and loading
+- **Standardized Interface**: Consistent API for all plugins
+- **Hot Loading**: Runtime plugin management without restart
+- **Dependency Validation**: Automatic checking of plugin requirements
 
-### Enhanced GUI and Usability
-- **Real-time Monitoring Dashboard**: Live graphs for signal strength, network activity, and security trends
-- **Professional Export System**: Generate CSV, JSON, and styled HTML reports
-- **Accessibility Features**: High contrast mode, font scaling (50%-300%), enhanced keyboard navigation
-- **Multi-language Support**: 11 languages with runtime switching (English, Spanish, French, German, etc.)
-- **Advanced Theme System**: 6+ built-in themes with complete customization options
-- **Enhanced Navigation**: Improved menu structure, keyboard shortcuts, and spatial navigation
+### Enhanced Launcher
+- **Plugin Browser**: Visual interface for selecting and launching plugins
+- **Plugin Details**: Comprehensive information about each plugin's capabilities
+- **Fallback Support**: Graceful handling when plugin system is unavailable
+- **Status Monitoring**: Real-time plugin status and error reporting
 
-### Enhanced Visualization
+### Developer Experience
+- **Plugin Development Kit**: Complete framework for creating new tools
+- **Documentation**: Comprehensive guides for plugin development
+- **Testing Framework**: Automated testing for plugin functionality
+- **Template System**: Quick-start templates for new plugins
+
+### Enhanced Visualization (v4.0 Continued)
 - Multiple radar modes (Grid/Polar/Heatmap)
 - Intelligent AP positioning to prevent overlapping
 - Modern animations and smooth transitions
 - Professional color schemes and gradients
 - Real-time data visualization with customizable update intervals
 
-### Advanced Analysis
+### Advanced Analysis (Continued)
 - Enhanced distance calculation algorithms
 - Comprehensive vendor identification
 - Multi-factor vulnerability scoring
 - Detailed attack vector analysis
 - Professional reporting with export capabilities
 
-### User Experience
+### User Experience (Enhanced)
 - Modern Material Design interface
 - Copy functionality for all analysis results
 - Professional dialog systems
 - Responsive layout design
-- Comprehensive accessibility support
 
 ## Troubleshooting
 
@@ -276,41 +313,48 @@ sudo systemctl start NetworkManager
 ## Documentation
 
 - **README.md** - Main documentation (this file)
+- **docs/PLUGIN_DEVELOPMENT.md** - Comprehensive plugin development guide
+- **docs/MODULAR_ARCHITECTURE.md** - Architecture overview and design decisions
 - **THEMING_AND_VIEWS.md** - Comprehensive theming and view modes guide
 - **PROJECT_CLEANUP_SUMMARY.md** - Project organization and cleanup details
 - **old/** - Previous versions and deprecated documentation
 - **backup/** - Duplicate files from project cleanup
 
-## Version History
+## Developing Plugins
 
-- **v5.0** - Modern radar v4.0, project cleanup, fixed drawEllipse issues
-- **v4.0** - Navigation enhanced interface with view modes
-- **v3.0** - Penetration testing radar with vulnerability analysis
-- **v2.0** - UI improvements and theming enhancements
-- **v1.0** - Initial WiFi radar implementation
+The modular architecture enables easy development of new WiFi monitoring tools. See `docs/PLUGIN_DEVELOPMENT.md` for a comprehensive guide including:
 
-## Recent Updates (v5.0)
+- Plugin architecture overview
+- Step-by-step plugin creation
+- API reference and examples
+- Testing and deployment
+- Best practices and troubleshooting
 
-### Bug Fixes
-- ✅ Fixed TypeError in `drawEllipse` methods by converting float to int
-- ✅ Resolved radar visualization crashes in modern interface
-- ✅ Updated main launcher to use modern pentest radar
+### Quick Plugin Example
 
-### Major GUI and Usability Improvements
-- ✅ **Real-time Graphs**: Signal strength, network activity, and security trend monitoring
-- ✅ **Enhanced Export**: CSV, JSON, and professional HTML reports with styling
-- ✅ **Accessibility Features**: High contrast mode, font scaling, keyboard navigation
-- ✅ **Multi-language Support**: 11 languages with translation framework
-- ✅ **Advanced Theming**: 6+ customizable themes with color/layout controls
-- ✅ **Enhanced Navigation**: Improved menu structure and keyboard shortcuts
+```python
+from core.plugin_base import WiFiPlugin, PluginMetadata
 
-### Core Improvements
-- ✅ Enhanced project organization with backup folder
-- ✅ Modern radar with advanced visualization modes
-- ✅ Professional Material Design interface elements
-- ✅ Comprehensive analysis report generation
-- ✅ Copy functionality for all analysis results
-- ✅ Modular feature integration system
+class MyCustomPlugin(WiFiPlugin):
+    @property
+    def metadata(self) -> PluginMetadata:
+        return PluginMetadata(
+            name="My Custom Tool",
+            version="1.0.0",
+            description="Custom WiFi monitoring tool",
+            author="Your Name",
+            capabilities=["wifi_scanning", "custom_analysis"]
+        )
+    
+    def create_main_window(self):
+        return MyCustomMainWindow()
+    
+    # Implement other required methods...
+
+def get_plugin_class():
+    return MyCustomPlugin
+```
+
 
 ## Legal Notice
 
@@ -320,7 +364,32 @@ This tool is designed for **educational purposes** and **authorized security tes
 
 ## Contributing
 
-Contributions are welcome! Please ensure any modifications maintain the professional theming and security focus of the project.
+Contributions are welcome! This project follows a formal code review process to ensure quality and security.
+
+### Code Review Process
+
+- **Official Reviewer**: All major feature and improvement pull requests are reviewed by @github/copilot
+- **Review Standards**: We maintain high standards for code quality, security, and documentation
+- **Community Involvement**: Community feedback and contributions are encouraged and valued
+
+### Getting Started
+
+1. Read our [Contributing Guidelines](CONTRIBUTING.md)
+2. Fork the repository and create a feature branch
+3. Make your changes following our coding standards
+4. Submit a pull request using the provided template
+5. Participate in the code review process
+
+### Review Standards
+
+All pull requests must meet the following criteria:
+- ✅ Code quality and style consistency
+- ✅ Security considerations addressed
+- ✅ Adequate documentation and comments
+- ✅ Appropriate test coverage
+- ✅ No breaking changes without justification
+
+Please ensure any modifications maintain the professional theming and security focus of the project.
 
 ---
 

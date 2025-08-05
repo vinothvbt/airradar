@@ -1,0 +1,96 @@
+name: Bug Report
+description: Report a bug or issue with airradar
+title: "[BUG] "
+labels: ["bug", "triage"]
+assignees:
+  - vinothvbt
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! This helps us improve airradar.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of what the bug is.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What should have happened instead?
+      placeholder: Tell us what you expected to see!
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected?
+      options:
+        - WiFi Radar (Navigation Enhanced)
+        - Penetration Testing Radar (Modern)
+        - Main Launcher
+        - Configuration System
+        - Security Engine
+        - Distance Engine
+        - Vendor Service
+        - UI/Theming
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Please provide your environment details
+      value: |
+        - OS: [e.g. Ubuntu 22.04]
+        - Python Version: [e.g. 3.10.6]
+        - PyQt5 Version: [e.g. 5.15.0]
+        - Wireless Interface: [e.g. wlan0]
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Please copy and paste any relevant log output or error messages
+      render: shell
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here, including screenshots if applicable
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our community guidelines
+      options:
+        - label: I agree to follow this project's code of conduct
+          required: true

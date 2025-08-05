@@ -1,0 +1,14 @@
+# Global code ownership - assign copilot as the official reviewer
+# for all major feature and improvement pull requests
+
+# All files in the repository
+* @github/copilot
+
+# Critical system files require additional review
+requirements.txt @github/copilot @vinothvbt
+*.py @github/copilot
+config.json @github/copilot @vinothvbt
+
+# Documentation files
+*.md @github/copilot
+.github/ @github/copilot @vinothvbt
