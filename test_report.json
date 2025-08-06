@@ -1,54 +1,15 @@
 {
-  "timestamp": "2025-08-06T13:44:33.419614",
-  "total_tests": 10,
-  "passed_tests": 8,
-  "execution_time": 1.5157856941223145,
+  "timestamp": "2025-08-06T13:46:09.864786",
+  "total_tests": 1,
+  "passed_tests": 1,
+  "execution_time": 0.05489540100097656,
   "categories": {
-    "core": {
-      "passed": 2,
-      "total": 2
-    },
-    "features": {
-      "passed": 0,
-      "total": 1
-    },
-    "plugins": {
-      "passed": 1,
-      "total": 1
-    },
-    "integration": {
-      "passed": 2,
-      "total": 2
-    },
     "security": {
-      "passed": 1,
-      "total": 1
-    },
-    "gui": {
-      "passed": 0,
-      "total": 1
-    },
-    "imports": {
-      "passed": 1,
-      "total": 1
-    },
-    "backend": {
       "passed": 1,
       "total": 1
     }
   },
-  "failed_tests": [
-    {
-      "name": "test_core_features",
-      "category": "features",
-      "error": "Exit code: 1"
-    },
-    {
-      "name": "test_gui_non_display",
-      "category": "gui",
-      "error": "Exit code: -6\nSTDERR: QWidget: Must construct a QApplication before a QWidget\n"
-    }
-  ],
+  "failed_tests": [],
   "performance": [],
   "system_info": {
     "python_version": "3.12.3",
