@@ -1,0 +1,58 @@
+{
+  "timestamp": "2025-08-06T13:48:33.544888",
+  "total_tests": 10,
+  "passed_tests": 8,
+  "execution_time": 1.4599499702453613,
+  "categories": {
+    "core": {
+      "passed": 2,
+      "total": 2
+    },
+    "features": {
+      "passed": 0,
+      "total": 1
+    },
+    "plugins": {
+      "passed": 1,
+      "total": 1
+    },
+    "integration": {
+      "passed": 2,
+      "total": 2
+    },
+    "security": {
+      "passed": 1,
+      "total": 1
+    },
+    "gui": {
+      "passed": 0,
+      "total": 1
+    },
+    "imports": {
+      "passed": 1,
+      "total": 1
+    },
+    "backend": {
+      "passed": 1,
+      "total": 1
+    }
+  },
+  "failed_tests": [
+    {
+      "name": "test_core_features",
+      "category": "features",
+      "error": "Exit code: 1"
+    },
+    {
+      "name": "test_gui_non_display",
+      "category": "gui",
+      "error": "Exit code: -6\nSTDERR: QWidget: Must construct a QApplication before a QWidget\n"
+    }
+  ],
+  "performance": [],
+  "system_info": {
+    "python_version": "3.12.3",
+    "platform": "linux",
+    "working_directory": "/home/runner/work/airradar/airradar"
+  }
+}
