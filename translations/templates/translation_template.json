@@ -1,0 +1,588 @@
+{
+  "main_window": {
+    "title": {
+      "english": "WiFi Security Radar Suite",
+      "translation": "",
+      "notes": ""
+    },
+    "scan_button": {
+      "english": "Start Scan",
+      "translation": "",
+      "notes": ""
+    },
+    "stop_button": {
+      "english": "Stop Scan",
+      "translation": "",
+      "notes": ""
+    },
+    "refresh_button": {
+      "english": "Refresh",
+      "translation": "",
+      "notes": ""
+    },
+    "export_button": {
+      "english": "Export Data",
+      "translation": "",
+      "notes": ""
+    },
+    "settings_button": {
+      "english": "Settings",
+      "translation": "",
+      "notes": ""
+    },
+    "help_button": {
+      "english": "Help",
+      "translation": "",
+      "notes": ""
+    },
+    "about_button": {
+      "english": "About",
+      "translation": "",
+      "notes": ""
+    },
+    "exit_button": {
+      "english": "Exit",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "menu": {
+    "file": {
+      "english": "File",
+      "translation": "",
+      "notes": ""
+    },
+    "edit": {
+      "english": "Edit",
+      "translation": "",
+      "notes": ""
+    },
+    "view": {
+      "english": "View",
+      "translation": "",
+      "notes": ""
+    },
+    "tools": {
+      "english": "Tools",
+      "translation": "",
+      "notes": ""
+    },
+    "help": {
+      "english": "Help",
+      "translation": "",
+      "notes": ""
+    },
+    "new_scan": {
+      "english": "New Scan",
+      "translation": "",
+      "notes": ""
+    },
+    "save_results": {
+      "english": "Save Results",
+      "translation": "",
+      "notes": ""
+    },
+    "export_data": {
+      "english": "Export Data",
+      "translation": "",
+      "notes": ""
+    },
+    "preferences": {
+      "english": "Preferences",
+      "translation": "",
+      "notes": ""
+    },
+    "accessibility": {
+      "english": "Accessibility",
+      "translation": "",
+      "notes": ""
+    },
+    "language": {
+      "english": "Language",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "toolbar": {
+    "scan": {
+      "english": "Scan Networks",
+      "translation": "",
+      "notes": ""
+    },
+    "stop": {
+      "english": "Stop Scanning",
+      "translation": "",
+      "notes": ""
+    },
+    "refresh": {
+      "english": "Refresh Display",
+      "translation": "",
+      "notes": ""
+    },
+    "export": {
+      "english": "Export Results",
+      "translation": "",
+      "notes": ""
+    },
+    "graphs": {
+      "english": "Show Graphs",
+      "translation": "",
+      "notes": ""
+    },
+    "zoom_in": {
+      "english": "Zoom In",
+      "translation": "",
+      "notes": ""
+    },
+    "zoom_out": {
+      "english": "Zoom Out",
+      "translation": "",
+      "notes": ""
+    },
+    "fullscreen": {
+      "english": "Fullscreen",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "network_info": {
+    "ssid": {
+      "english": "Network Name (SSID)",
+      "translation": "",
+      "notes": ""
+    },
+    "bssid": {
+      "english": "MAC Address (BSSID)",
+      "translation": "",
+      "notes": ""
+    },
+    "security": {
+      "english": "Security Type",
+      "translation": "",
+      "notes": ""
+    },
+    "signal": {
+      "english": "Signal Strength",
+      "translation": "",
+      "notes": ""
+    },
+    "channel": {
+      "english": "Channel",
+      "translation": "",
+      "notes": ""
+    },
+    "frequency": {
+      "english": "Frequency",
+      "translation": "",
+      "notes": ""
+    },
+    "vendor": {
+      "english": "Vendor",
+      "translation": "",
+      "notes": ""
+    },
+    "last_seen": {
+      "english": "Last Seen",
+      "translation": "",
+      "notes": ""
+    },
+    "distance": {
+      "english": "Estimated Distance",
+      "translation": "",
+      "notes": ""
+    },
+    "threat_level": {
+      "english": "Threat Level",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "security_types": {
+    "open": {
+      "english": "Open Network",
+      "translation": "",
+      "notes": ""
+    },
+    "wep": {
+      "english": "WEP Encryption",
+      "translation": "",
+      "notes": ""
+    },
+    "wpa": {
+      "english": "WPA Encryption",
+      "translation": "",
+      "notes": ""
+    },
+    "wpa2": {
+      "english": "WPA2 Encryption",
+      "translation": "",
+      "notes": ""
+    },
+    "wpa3": {
+      "english": "WPA3 Encryption",
+      "translation": "",
+      "notes": ""
+    },
+    "unknown": {
+      "english": "Unknown Security",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "threat_levels": {
+    "critical": {
+      "english": "Critical Risk",
+      "translation": "",
+      "notes": ""
+    },
+    "high": {
+      "english": "High Risk",
+      "translation": "",
+      "notes": ""
+    },
+    "medium": {
+      "english": "Medium Risk",
+      "translation": "",
+      "notes": ""
+    },
+    "low": {
+      "english": "Low Risk",
+      "translation": "",
+      "notes": ""
+    },
+    "minimal": {
+      "english": "Minimal Risk",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "graphs": {
+    "signal_strength": {
+      "english": "Signal Strength",
+      "translation": "",
+      "notes": ""
+    },
+    "network_activity": {
+      "english": "Network Activity",
+      "translation": "",
+      "notes": ""
+    },
+    "security_trends": {
+      "english": "Security Trends",
+      "translation": "",
+      "notes": ""
+    },
+    "real_time_monitoring": {
+      "english": "Real-time Monitoring Dashboard",
+      "translation": "",
+      "notes": ""
+    },
+    "auto_update": {
+      "english": "Auto Update",
+      "translation": "",
+      "notes": ""
+    },
+    "update_interval": {
+      "english": "Update Interval (seconds)",
+      "translation": "",
+      "notes": ""
+    },
+    "clear_data": {
+      "english": "Clear Data",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "export": {
+    "title": {
+      "english": "Export WiFi Data",
+      "translation": "",
+      "notes": ""
+    },
+    "format": {
+      "english": "Export Format",
+      "translation": "",
+      "notes": ""
+    },
+    "csv_format": {
+      "english": "CSV (Comma Separated Values)",
+      "translation": "",
+      "notes": ""
+    },
+    "json_format": {
+      "english": "JSON (JavaScript Object Notation)",
+      "translation": "",
+      "notes": ""
+    },
+    "html_format": {
+      "english": "HTML Report (Web Page)",
+      "translation": "",
+      "notes": ""
+    },
+    "include_metadata": {
+      "english": "Include scan metadata",
+      "translation": "",
+      "notes": ""
+    },
+    "pretty_format": {
+      "english": "Pretty formatting",
+      "translation": "",
+      "notes": ""
+    },
+    "output_file": {
+      "english": "Output File",
+      "translation": "",
+      "notes": ""
+    },
+    "browse": {
+      "english": "Browse...",
+      "translation": "",
+      "notes": ""
+    },
+    "export_button": {
+      "english": "Export Data",
+      "translation": "",
+      "notes": ""
+    },
+    "cancel": {
+      "english": "Cancel",
+      "translation": "",
+      "notes": ""
+    },
+    "success": {
+      "english": "Data successfully exported",
+      "translation": "",
+      "notes": ""
+    },
+    "failed": {
+      "english": "Export failed",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "accessibility": {
+    "title": {
+      "english": "Accessibility Settings",
+      "translation": "",
+      "notes": ""
+    },
+    "visual_accessibility": {
+      "english": "Visual Accessibility",
+      "translation": "",
+      "notes": ""
+    },
+    "high_contrast": {
+      "english": "Enable High Contrast Mode",
+      "translation": "",
+      "notes": ""
+    },
+    "enhanced_focus": {
+      "english": "Enhanced Focus Indicators",
+      "translation": "",
+      "notes": ""
+    },
+    "font_size": {
+      "english": "Font Size",
+      "translation": "",
+      "notes": ""
+    },
+    "navigation": {
+      "english": "Navigation",
+      "translation": "",
+      "notes": ""
+    },
+    "keyboard_navigation": {
+      "english": "Enhanced Keyboard Navigation",
+      "translation": "",
+      "notes": ""
+    },
+    "screen_reader": {
+      "english": "Screen Reader Support",
+      "translation": "",
+      "notes": ""
+    },
+    "themes": {
+      "english": "Accessibility Themes",
+      "translation": "",
+      "notes": ""
+    },
+    "theme": {
+      "english": "Theme",
+      "translation": "",
+      "notes": ""
+    },
+    "apply": {
+      "english": "Apply Settings",
+      "translation": "",
+      "notes": ""
+    },
+    "reset": {
+      "english": "Reset to Defaults",
+      "translation": "",
+      "notes": ""
+    },
+    "close": {
+      "english": "Close",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "scanner": {
+    "status_scanning": {
+      "english": "Scanning for networks...",
+      "translation": "",
+      "notes": ""
+    },
+    "status_stopped": {
+      "english": "Scan stopped",
+      "translation": "",
+      "notes": ""
+    },
+    "status_complete": {
+      "english": "Scan complete",
+      "translation": "",
+      "notes": ""
+    },
+    "networks_found": {
+      "english": "networks found",
+      "translation": "",
+      "notes": ""
+    },
+    "no_networks": {
+      "english": "No networks detected",
+      "translation": "",
+      "notes": ""
+    },
+    "scan_error": {
+      "english": "Scan error occurred",
+      "translation": "",
+      "notes": ""
+    },
+    "interface_error": {
+      "english": "No wireless interface detected",
+      "translation": "",
+      "notes": ""
+    },
+    "permission_error": {
+      "english": "Permission denied - run as root",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "dialogs": {
+    "error": {
+      "english": "Error",
+      "translation": "",
+      "notes": ""
+    },
+    "warning": {
+      "english": "Warning",
+      "translation": "",
+      "notes": ""
+    },
+    "information": {
+      "english": "Information",
+      "translation": "",
+      "notes": ""
+    },
+    "confirmation": {
+      "english": "Confirm",
+      "translation": "",
+      "notes": ""
+    },
+    "yes": {
+      "english": "Yes",
+      "translation": "",
+      "notes": ""
+    },
+    "no": {
+      "english": "No",
+      "translation": "",
+      "notes": ""
+    },
+    "ok": {
+      "english": "OK",
+      "translation": "",
+      "notes": ""
+    },
+    "cancel": {
+      "english": "Cancel",
+      "translation": "",
+      "notes": ""
+    },
+    "apply": {
+      "english": "Apply",
+      "translation": "",
+      "notes": ""
+    },
+    "close": {
+      "english": "Close",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "status": {
+    "ready": {
+      "english": "Ready",
+      "translation": "",
+      "notes": ""
+    },
+    "scanning": {
+      "english": "Scanning...",
+      "translation": "",
+      "notes": ""
+    },
+    "processing": {
+      "english": "Processing...",
+      "translation": "",
+      "notes": ""
+    },
+    "exporting": {
+      "english": "Exporting...",
+      "translation": "",
+      "notes": ""
+    },
+    "error": {
+      "english": "Error",
+      "translation": "",
+      "notes": ""
+    },
+    "connected": {
+      "english": "Connected",
+      "translation": "",
+      "notes": ""
+    },
+    "disconnected": {
+      "english": "Disconnected",
+      "translation": "",
+      "notes": ""
+    }
+  },
+  "help": {
+    "keyboard_shortcuts": {
+      "english": "Keyboard Shortcuts",
+      "translation": "",
+      "notes": ""
+    },
+    "about_title": {
+      "english": "About WiFi Security Radar",
+      "translation": "",
+      "notes": ""
+    },
+    "about_text": {
+      "english": "Professional WiFi Security Analysis Tool v5.0",
+      "translation": "",
+      "notes": ""
+    },
+    "copyright": {
+      "english": "© 2025 WiFi Security Tools",
+      "translation": "",
+      "notes": ""
+    },
+    "license": {
+      "english": "For authorized security testing only",
+      "translation": "",
+      "notes": ""
+    }
+  }
+}

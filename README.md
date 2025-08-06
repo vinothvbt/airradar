@@ -155,6 +155,14 @@ sudo python3 wifi_pentest_radar_modern.py
 - `Ctrl+-`: Zoom Out
 - `Ctrl+Q`: Exit
 
+### Enhanced Features (v5.0)
+- `Ctrl+G`: Toggle Real-time Graphs
+- `Ctrl+E`: Export Data
+- `Ctrl+Alt+A`: Accessibility Settings
+- `F1`: Accessibility Help
+- `Ctrl+Shift+S`: Toggle Screen Reader Mode
+- `Ctrl+Shift+H`: Toggle High Contrast Mode
+
 ### Modern Penetration Testing Radar
 - `Ctrl+1`: Compact Mode (800x500)
 - `Ctrl+2`: Normal Mode (1400x800)
@@ -220,8 +228,6 @@ See `THEMING_AND_VIEWS.md` for detailed theming documentation.
 - Security recommendations based on threat level
 - Copy functionality for easy report sharing
 
-## Modern Features (v5.0 - Modular Architecture)
-
 ### Plugin System
 - **Modular Design**: Easy addition and removal of WiFi monitoring tools
 - **Automatic Discovery**: Dynamic plugin detection and loading
@@ -246,19 +252,20 @@ See `THEMING_AND_VIEWS.md` for detailed theming documentation.
 - Intelligent AP positioning to prevent overlapping
 - Modern animations and smooth transitions
 - Professional color schemes and gradients
+- Real-time data visualization with customizable update intervals
 
 ### Advanced Analysis (Continued)
 - Enhanced distance calculation algorithms
 - Comprehensive vendor identification
 - Multi-factor vulnerability scoring
 - Detailed attack vector analysis
+- Professional reporting with export capabilities
 
 ### User Experience (Enhanced)
 - Modern Material Design interface
 - Copy functionality for all analysis results
 - Professional dialog systems
 - Responsive layout design
-- Plugin-based extensibility
 
 ## Troubleshooting
 
@@ -348,37 +355,6 @@ def get_plugin_class():
     return MyCustomPlugin
 ```
 
-## Version History
-
-- **v5.0** - **Modular Architecture**: Plugin system, automatic discovery, enhanced launcher
-- **v4.0** - Modern radar v4.0, project cleanup, fixed drawEllipse issues
-- **v3.0** - Navigation enhanced interface with view modes
-- **v2.0** - Penetration testing radar with vulnerability analysis
-- **v1.0** - UI improvements and theming enhancements
-- **v0.1** - Initial WiFi radar implementation
-
-## Recent Updates (v5.0 - Modular Architecture)
-
-### New Features
-- ✅ **Plugin System**: Modular architecture for extensible WiFi monitoring tools
-- ✅ **Plugin Manager**: Automatic discovery, loading, and management of plugins
-- ✅ **Enhanced Launcher**: Modern interface with plugin browser and details
-- ✅ **Developer Framework**: Complete plugin development kit with documentation
-- ✅ **Testing Suite**: Comprehensive testing for plugin system functionality
-
-### Architecture Improvements
-- ✅ **Standardized Interfaces**: Consistent API for all WiFi monitoring tools
-- ✅ **Loose Coupling**: Plugin system with abstract base classes
-- ✅ **Error Isolation**: Plugin errors don't crash the entire system
-- ✅ **Hot Loading**: Runtime plugin management without restart
-- ✅ **Backward Compatibility**: All original functionality preserved
-
-### Developer Experience
-- ✅ **Plugin Development Guide**: Comprehensive documentation with examples
-- ✅ **Template System**: Quick-start templates for new plugins
-- ✅ **Automatic Discovery**: No manual registration required
-- ✅ **Dependency Validation**: Automatic checking of plugin requirements
-- ✅ **Testing Framework**: Automated testing for plugin functionality
 
 ## Legal Notice
 
