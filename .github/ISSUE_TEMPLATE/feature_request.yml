@@ -1,0 +1,92 @@
+name: Feature Request
+description: Suggest an idea or new feature for airradar
+title: "[FEATURE] "
+labels: ["enhancement", "triage"]
+assignees:
+  - vinothvbt
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Community feedback is essential for improving airradar.
+
+  - type: textarea
+    id: problem-statement
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like
+      placeholder: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      placeholder: A clear and concise description of any alternative solutions or features you've considered.
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: Feature Category
+      description: What category does this feature belong to?
+      options:
+        - WiFi Scanning & Detection
+        - Security Analysis & Penetration Testing
+        - User Interface & Visualization
+        - Reporting & Export
+        - Configuration & Settings
+        - Performance & Optimization
+        - Documentation & Help
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - Critical - Blocks core functionality
+        - High - Significantly improves workflow
+        - Medium - Nice to have improvement
+        - Low - Minor enhancement
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Willingness
+      description: Are you willing to help implement this feature?
+      options:
+        - label: I am willing to submit a pull request for this feature
+        - label: I can provide testing and feedback
+        - label: I can help with documentation
+        - label: I can provide design input or mockups
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, mockups, or screenshots about the feature request here.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this feature request, you agree to follow our community guidelines
+      options:
+        - label: I agree to follow this project's code of conduct
+          required: true

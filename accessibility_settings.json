@@ -1,0 +1,8 @@
+{
+  "high_contrast": true,
+  "theme": "high_contrast",
+  "font_scale": 1.3,
+  "keyboard_navigation": true,
+  "screen_reader": false,
+  "enhanced_focus": true
+}

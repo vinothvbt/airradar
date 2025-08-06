@@ -1,0 +1,140 @@
+{
+  "main_window": {
+    "title": "WiFi Security Radar Suite",
+    "scan_button": "Start Scan",
+    "stop_button": "Stop Scan",
+    "refresh_button": "Refresh",
+    "export_button": "Export Data",
+    "settings_button": "Settings",
+    "help_button": "Help",
+    "about_button": "About",
+    "exit_button": "Exit"
+  },
+  "menu": {
+    "file": "File",
+    "edit": "Edit",
+    "view": "View",
+    "tools": "Tools",
+    "help": "Help",
+    "new_scan": "New Scan",
+    "save_results": "Save Results",
+    "export_data": "Export Data",
+    "preferences": "Preferences",
+    "accessibility": "Accessibility",
+    "language": "Language"
+  },
+  "toolbar": {
+    "scan": "Scan Networks",
+    "stop": "Stop Scanning",
+    "refresh": "Refresh Display",
+    "export": "Export Results",
+    "graphs": "Show Graphs",
+    "zoom_in": "Zoom In",
+    "zoom_out": "Zoom Out",
+    "fullscreen": "Fullscreen"
+  },
+  "network_info": {
+    "ssid": "Network Name (SSID)",
+    "bssid": "MAC Address (BSSID)",
+    "security": "Security Type",
+    "signal": "Signal Strength",
+    "channel": "Channel",
+    "frequency": "Frequency",
+    "vendor": "Vendor",
+    "last_seen": "Last Seen",
+    "distance": "Estimated Distance",
+    "threat_level": "Threat Level"
+  },
+  "security_types": {
+    "open": "Open Network",
+    "wep": "WEP Encryption",
+    "wpa": "WPA Encryption",
+    "wpa2": "WPA2 Encryption",
+    "wpa3": "WPA3 Encryption",
+    "unknown": "Unknown Security"
+  },
+  "threat_levels": {
+    "critical": "Critical Risk",
+    "high": "High Risk",
+    "medium": "Medium Risk",
+    "low": "Low Risk",
+    "minimal": "Minimal Risk"
+  },
+  "graphs": {
+    "signal_strength": "Signal Strength",
+    "network_activity": "Network Activity",
+    "security_trends": "Security Trends",
+    "real_time_monitoring": "Real-time Monitoring Dashboard",
+    "auto_update": "Auto Update",
+    "update_interval": "Update Interval (seconds)",
+    "clear_data": "Clear Data"
+  },
+  "export": {
+    "title": "Export WiFi Data",
+    "format": "Export Format",
+    "csv_format": "CSV (Comma Separated Values)",
+    "json_format": "JSON (JavaScript Object Notation)",
+    "html_format": "HTML Report (Web Page)",
+    "include_metadata": "Include scan metadata",
+    "pretty_format": "Pretty formatting",
+    "output_file": "Output File",
+    "browse": "Browse...",
+    "export_button": "Export Data",
+    "cancel": "Cancel",
+    "success": "Data successfully exported",
+    "failed": "Export failed"
+  },
+  "accessibility": {
+    "title": "Accessibility Settings",
+    "visual_accessibility": "Visual Accessibility",
+    "high_contrast": "Enable High Contrast Mode",
+    "enhanced_focus": "Enhanced Focus Indicators",
+    "font_size": "Font Size",
+    "navigation": "Navigation",
+    "keyboard_navigation": "Enhanced Keyboard Navigation",
+    "screen_reader": "Screen Reader Support",
+    "themes": "Accessibility Themes",
+    "theme": "Theme",
+    "apply": "Apply Settings",
+    "reset": "Reset to Defaults",
+    "close": "Close"
+  },
+  "scanner": {
+    "status_scanning": "Scanning for networks...",
+    "status_stopped": "Scan stopped",
+    "status_complete": "Scan complete",
+    "networks_found": "networks found",
+    "no_networks": "No networks detected",
+    "scan_error": "Scan error occurred",
+    "interface_error": "No wireless interface detected",
+    "permission_error": "Permission denied - run as root"
+  },
+  "dialogs": {
+    "error": "Error",
+    "warning": "Warning",
+    "information": "Information",
+    "confirmation": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "cancel": "Cancel",
+    "apply": "Apply",
+    "close": "Close"
+  },
+  "status": {
+    "ready": "Ready",
+    "scanning": "Scanning...",
+    "processing": "Processing...",
+    "exporting": "Exporting...",
+    "error": "Error",
+    "connected": "Connected",
+    "disconnected": "Disconnected"
+  },
+  "help": {
+    "keyboard_shortcuts": "Keyboard Shortcuts",
+    "about_title": "About WiFi Security Radar",
+    "about_text": "Professional WiFi Security Analysis Tool v5.0",
+    "copyright": "© 2025 WiFi Security Tools",
+    "license": "For authorized security testing only"
+  }
+}
