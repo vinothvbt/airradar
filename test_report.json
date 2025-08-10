@@ -1,15 +1,15 @@
 {
-  "timestamp": "2025-08-10T05:12:13.843016",
+  "timestamp": "2025-08-10T05:21:11.507118",
   "total_tests": 10,
-  "passed_tests": 8,
-  "execution_time": 1.577507734298706,
+  "passed_tests": 10,
+  "execution_time": 1.4723587036132812,
   "categories": {
     "core": {
       "passed": 2,
       "total": 2
     },
     "features": {
-      "passed": 0,
+      "passed": 1,
       "total": 1
     },
     "plugins": {
@@ -25,7 +25,7 @@
       "total": 1
     },
     "gui": {
-      "passed": 0,
+      "passed": 1,
       "total": 1
     },
     "imports": {
@@ -37,37 +37,26 @@
       "total": 1
     }
   },
-  "failed_tests": [
-    {
-      "name": "test_core_features",
-      "category": "features",
-      "error": "Exit code: 1"
-    },
-    {
-      "name": "test_gui_non_display",
-      "category": "gui",
-      "error": "Exit code: -6\nSTDERR: QWidget: Must construct a QApplication before a QWidget\n"
-    }
-  ],
+  "failed_tests": [],
   "performance": [
     [
       "Module Import Speed",
-      0.12752795219421387,
+      0.10201096534729004,
       "seconds"
     ],
     [
       "Configuration Loading",
-      2.1457672119140625e-06,
+      2.6226043701171875e-06,
       "seconds"
     ],
     [
       "Security Analysis (100x)",
-      0.004702091217041016,
+      0.0027971267700195312,
       "seconds"
     ],
     [
       "Security Analysis (avg)",
-      4.7020912170410156e-05,
+      2.797126770019531e-05,
       "seconds"
     ]
   ],
