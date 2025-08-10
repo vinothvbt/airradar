@@ -10,7 +10,9 @@ Tests widget creation, styling, and basic functionality.
 import sys
 import os
 
-# Set QT platform to offscreen BEFORE any PyQt5 imports
+# Set QT platform to 'offscreen' BEFORE any PyQt5 imports.
+# This is required to prevent QApplication initialization errors in headless (non-display) testing environments,
+# as PyQt5 will attempt to connect to a display server on import otherwise.
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
 
 def test_gui_imports():
