@@ -1,8 +1,8 @@
 {
-  "timestamp": "2025-08-10T05:26:45.773374",
+  "timestamp": "2025-08-10T05:28:42.084465",
   "total_tests": 10,
   "passed_tests": 10,
-  "execution_time": 1.5060741901397705,
+  "execution_time": 1.5432651042938232,
   "categories": {
     "core": {
       "passed": 2,
@@ -41,7 +41,7 @@
   "performance": [
     [
       "Module Import Speed",
-      0.10379791259765625,
+      0.10409808158874512,
       "seconds"
     ],
     [
@@ -51,12 +51,12 @@
     ],
     [
       "Security Analysis (100x)",
-      0.0031621456146240234,
+      0.002779245376586914,
       "seconds"
     ],
     [
       "Security Analysis (avg)",
-      3.162145614624023e-05,
+      2.779245376586914e-05,
       "seconds"
     ]
   ],
