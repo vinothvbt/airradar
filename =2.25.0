@@ -10,10 +10,10 @@ Collecting PyQt5-Qt5<5.16.0,>=5.15.2 (from PyQt5)
   Downloading PyQt5_Qt5-5.15.17-py3-none-manylinux2014_x86_64.whl.metadata
      - 536 bytes ? 0:00:00
 Downloading PyQt5-5.15.11-cp38-abi3-manylinux_2_17_x86_64.whl
-   - 8.2 MB 156.4 MB/s 0:00:00
+   - 8.2 MB 126.3 MB/s 0:00:00
 Downloading PyQt5_Qt5-5.15.17-py3-none-manylinux2014_x86_64.whl
-   - 61.1 MB 246.7 MB/s 0:00:00
+   - 61.1 MB 236.3 MB/s 0:00:00
 Downloading PyQt5_sip-12.17.0-cp312-cp312-manylinux_2_5_x86_64.manylinux1_x86_64.whl
-   - 281.9 kB 189.8 MB/s 0:00:00
+   - 281.9 kB 201.4 MB/s 0:00:00
 Installing collected packages: PyQt5-Qt5, PyQt5-sip, PyQt5
 Successfully installed PyQt5-5.15.11 PyQt5-Qt5-5.15.17 PyQt5-sip-12.17.0

@@ -1,8 +1,8 @@
 {
-  "timestamp": "2025-08-06T13:48:33.544888",
+  "timestamp": "2025-08-10T05:12:13.843016",
   "total_tests": 10,
   "passed_tests": 8,
-  "execution_time": 1.4599499702453613,
+  "execution_time": 1.577507734298706,
   "categories": {
     "core": {
       "passed": 2,
@@ -49,7 +49,28 @@
       "error": "Exit code: -6\nSTDERR: QWidget: Must construct a QApplication before a QWidget\n"
     }
   ],
-  "performance": [],
+  "performance": [
+    [
+      "Module Import Speed",
+      0.12752795219421387,
+      "seconds"
+    ],
+    [
+      "Configuration Loading",
+      2.1457672119140625e-06,
+      "seconds"
+    ],
+    [
+      "Security Analysis (100x)",
+      0.004702091217041016,
+      "seconds"
+    ],
+    [
+      "Security Analysis (avg)",
+      4.7020912170410156e-05,
+      "seconds"
+    ]
+  ],
   "system_info": {
     "python_version": "3.12.3",
     "platform": "linux",
