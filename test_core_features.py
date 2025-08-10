@@ -180,7 +180,10 @@ def test_accessibility_core():
             print("❌ Theme setting failed")
             return False
             
-        # Test style generation
+        # Test style generation - ensure high contrast is enabled first
+        if not accessibility_manager.high_contrast_enabled:
+            accessibility_manager.toggle_high_contrast()
+            
         style = accessibility_manager.get_high_contrast_style()
         if style and "#000000" in style:
             print("✅ High contrast style generation working")

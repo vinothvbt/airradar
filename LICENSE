@@ -1,0 +1,41 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2025 airradar contributors
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+--------------------------------------------------------------------
+
+This project is licensed under the GNU General Public License v3.0
+
+You are free to:
+- Use the software for any purpose
+- Study how the software works and modify it
+- Distribute copies of the software
+- Distribute copies of your modified versions
+
+Under the following terms:
+- You must include this license and copyright notice
+- You must state changes made to the original software
+- You must license the entire work under GPL v3
+- You cannot add additional restrictions
+
+For educational and authorized security testing purposes only.
+Unauthorized network scanning may be illegal in your jurisdiction.
+
+DISCLAIMER: This software is provided for educational purposes and 
+authorized security testing only. Users are responsible for ensuring 
+compliance with applicable laws and regulations. The authors are not 
+responsible for any misuse of this software.

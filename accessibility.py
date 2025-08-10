@@ -76,8 +76,16 @@ class AccessibilityManager(QObject):
             
     def _setup_shortcuts(self):
         """Setup global accessibility shortcuts"""
-        # These would be registered globally if the app supports it
-        pass
+        # Note: Global shortcuts require a parent widget or QApplication instance
+        # They will be setup when a widget is provided via apply_accessibility_to_widget
+        # For now, we store the shortcut definitions
+        self.global_shortcuts = {
+            'toggle_high_contrast': 'Ctrl+Shift+H',
+            'increase_font': 'Ctrl+Shift+Plus',
+            'decrease_font': 'Ctrl+Shift+Minus',
+            'toggle_screen_reader': 'Ctrl+Shift+S',
+            'accessibility_help': 'F1'
+        }
     
     def toggle_high_contrast(self):
         """Toggle high contrast mode"""

@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+Quick Test Module for WiFi Security Radar Suite
+Quick smoke test to verify basic module imports and functionality
+"""
 
 # Simple test - import all modules and print success
 print("Testing new WiFi radar system...")
