@@ -1,0 +1,165 @@
+.TH AIRRADAR 1 "August 2025" "airradar 5.0.0" "WiFi Security Tools"
+
+.SH NAME
+airradar \- WiFi Security Radar Suite for professional WiFi security analysis
+
+.SH SYNOPSIS
+.B airradar
+.br
+.B airradar-gui
+.br
+.B airradar-pentest
+
+.SH DESCRIPTION
+.B airradar
+is a comprehensive WiFi security analysis suite featuring modern interfaces, 
+comprehensive theming, and advanced penetration testing capabilities. It provides
+professional-grade tools for WiFi network discovery, security assessment, and
+vulnerability analysis.
+
+The suite consists of multiple tools:
+.IP \[bu] 2
+.B airradar
+- Main launcher with plugin-based architecture
+.IP \[bu]
+.B airradar-gui
+- Navigation Enhanced WiFi Radar with professional interface
+.IP \[bu]
+.B airradar-pentest
+- Modern Penetration Testing Radar with advanced threat analysis
+
+.SH FEATURES
+.TP
+.B WiFi Network Discovery
+Automatic detection and analysis of nearby WiFi networks with comprehensive metadata collection.
+
+.TP
+.B Security Analysis
+Multi-factor vulnerability assessment with threat level classification and attack vector identification.
+
+.TP
+.B Professional Visualization
+Multiple visualization modes including Grid, Polar, and Heatmap displays with real-time updates.
+
+.TP
+.B Plugin Architecture
+Modular design enabling easy addition of new tools and functionality.
+
+.TP
+.B Configuration Management
+JSON-based configuration system for all aspects of scanning, analysis, and visualization.
+
+.TP
+.B Accessibility Support
+Full accessibility features including high contrast modes, keyboard navigation, and screen reader support.
+
+.TP
+.B Internationalization
+Multi-language support with translation templates for global deployment.
+
+.SH REQUIREMENTS
+.TP
+.B Operating System
+Linux distributions (Ubuntu 18.04+, Debian 10+, Kali Linux 2020.1+)
+
+.TP
+.B Permissions
+Root privileges required for wireless interface scanning and monitoring
+
+.TP
+.B Hardware
+WiFi adapter supporting monitor mode (recommended for advanced features)
+
+.TP
+.B Dependencies
+Python 3.8+, PyQt5 5.15+, wireless-tools, iw
+
+.SH OPTIONS
+Run each command without arguments to access the interactive interface. 
+Configuration options are available through the GUI settings dialogs or 
+by editing the config.json file.
+
+.SH FILES
+.TP
+.I config.json
+Main configuration file containing scanning, analysis, and visualization settings
+.TP
+.I accessibility_settings.json
+Accessibility configuration including contrast modes and keyboard navigation
+.TP
+.I theme_settings.json
+Theme and visual customization settings
+.TP
+.I language_settings.json
+Internationalization and language preferences
+.TP
+.I oui_database.json
+Local vendor database for MAC address to manufacturer mapping
+
+.SH EXAMPLES
+.TP
+Launch the main application launcher:
+.B sudo airradar
+
+.TP
+Start the navigation enhanced interface directly:
+.B sudo airradar-gui
+
+.TP
+Launch the penetration testing radar:
+.B sudo airradar-pentest
+
+.SH SECURITY CONSIDERATIONS
+This tool is designed for educational purposes and authorized security testing only.
+Users must ensure compliance with applicable laws and regulations. Unauthorized
+network scanning may be illegal in your jurisdiction.
+
+.B WARNING:
+Only scan networks you own or have explicit written permission to test.
+
+.SH TROUBLESHOOTING
+.TP
+.B No wireless interfaces detected
+Check that wireless interface exists with 'iwconfig' or 'iw dev'. Ensure interface
+is up with 'sudo ip link set wlan0 up'.
+
+.TP
+.B Permission denied errors
+Application requires root privileges. Always run with 'sudo'.
+
+.TP
+.B NetworkManager conflicts
+Temporarily stop NetworkManager with 'sudo systemctl stop NetworkManager' if 
+scanning fails.
+
+.TP
+.B PyQt5 import errors
+Install PyQt5 with 'sudo apt install python3-pyqt5 python3-pyqt5-dev'.
+
+.SH EXIT STATUS
+.TP
+.B 0
+Success
+.TP
+.B 1
+General error (missing dependencies, permission issues, etc.)
+
+.SH AUTHOR
+Written by the airradar development team.
+
+.SH REPORTING BUGS
+Report bugs to: https://github.com/vinothvbt/airradar/issues
+
+.SH COPYRIGHT
+Copyright (C) 2025 airradar contributors.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+.BR iwconfig (8),
+.BR iw (8),
+.BR aircrack-ng (1),
+.BR wireshark (1)
+
+For complete documentation, see: https://github.com/vinothvbt/airradar#readme
