@@ -64,11 +64,11 @@ Documentation = "https://github.com/vinothvbt/airradar#readme"
 [project.scripts]
 airradar = "core.main:main"
 airradar-gui = "wifi_radar_nav_enhanced:main"
-airradar-pentest = "wifi_pentest_radar_modern:main"
+airradar-pentest = "wifi_pentest_radar_modern:WiFiPentestRadarModern"
 
 [project.gui-scripts]
 airradar-gui = "wifi_radar_nav_enhanced:main"
-airradar-pentest = "wifi_pentest_radar_modern:main"
+airradar-pentest = "wifi_pentest_radar_modern:WiFiPentestRadarModern"
 
 [tool.setuptools]
 packages = ["core", "plugins", "translations"]
