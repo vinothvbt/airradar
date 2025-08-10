@@ -62,7 +62,7 @@ Issues = "https://github.com/vinothvbt/airradar/issues"
 Documentation = "https://github.com/vinothvbt/airradar#readme"
 
 [project.scripts]
-airradar = "main_launcher:main"
+airradar = "core.main:main"
 airradar-gui = "wifi_radar_nav_enhanced:main"
 airradar-pentest = "wifi_pentest_radar_modern:main"
 
